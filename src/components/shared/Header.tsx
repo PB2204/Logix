@@ -28,7 +28,7 @@ export default function Header() {
           <Button variant="ghost" asChild>
             <Link href="/login">Login</Link>
           </Button>
-          <Button className="bg-gradient-accent text-white" asChild>
+          <Button variant="accent" asChild>
             <Link href="/signup">Sign Up</Link>
           </Button>
         </div>
@@ -50,7 +50,7 @@ export default function Header() {
                 ))}
                 <div className="border-t pt-6 flex flex-col gap-4">
                   <Button variant="ghost" asChild><Link href="/login">Login</Link></Button>
-                  <Button className="bg-gradient-accent text-white" asChild><Link href="/signup">Sign Up</Link></Button>
+                  <Button variant="accent" asChild><Link href="/signup">Sign Up</Link></Button>
                 </div>
               </div>
             </SheetContent>

@@ -72,10 +72,14 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--gradient-angle), hsl(var(--gradient-primary-from)), hsl(var(--gradient-primary-to)));
+  background: transparent;
   border-radius: 10px;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   background-clip: content-box;
+}
+
+:hover::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--gradient-angle), hsl(var(--gradient-primary-from)), hsl(var(--gradient-primary-to)));
   box-shadow: 0 0 10px hsl(var(--gradient-primary-to)), 0 0 20px hsl(var(--gradient-primary-to) / 0.8);
 }
 

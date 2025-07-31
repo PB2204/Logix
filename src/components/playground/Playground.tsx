@@ -60,7 +60,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
                 language={match[1]}
                 PreTag="div"
                 {...props}
-                className="!p-4 !m-0 !bg-transparent overflow-x-auto"
+                className="!p-4 !m-0 !bg-transparent overflow-auto"
             >
                 {code}
             </SyntaxHighlighter>
@@ -164,7 +164,7 @@ export function Playground() {
               {isAnalyzing ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
               Analyze
             </Button>
-            <Button onClick={handleExecute} disabled={isExecuting} className="bg-gradient-accent text-white">
+            <Button onClick={handleExecute} disabled={isExecuting} variant="accent">
               {isExecuting ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : <Play className="mr-2 h-4 w-4" />}
               Run
             </Button>
@@ -242,8 +242,8 @@ export function Playground() {
                                             }}
                                         />
                                         <Legend verticalAlign="bottom" wrapperStyle={{paddingTop: 20}}/>
-                                        <Bar yAxisId="left" dataKey="time" fill="url(#colorTime)" name="Time Complexity" key="time" />
-                                        <Bar yAxisId="right" dataKey="space" fill="url(#colorSpace)" name="Space Complexity" key="space" />
+                                        <Bar yAxisId="left" dataKey="time" fill="url(#colorTime)" name="Time Complexity" />
+                                        <Bar yAxisId="right" dataKey="space" fill="url(#colorSpace)" name="Space Complexity" />
                                          <defs>
                                             <linearGradient id="colorTime" x1="0" y1="0" x2="0" y2="1">
                                                 <stop offset="5%" stopColor="hsl(var(--gradient-primary-from))" stopOpacity={0.8}/>

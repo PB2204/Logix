@@ -61,7 +61,7 @@ export function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full bg-gradient-accent text-white">
+        <Button type="submit" className="w-full" variant="accent">
           Login
         </Button>
       </form>
