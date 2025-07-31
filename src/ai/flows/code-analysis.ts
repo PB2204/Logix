@@ -34,7 +34,7 @@ const prompt = ai.definePrompt({
 
 Language: {{{language}}}
 Code:
-```{{{code}}}````,
+\`\`\`{{{code}}}\`\`\``,
 });
 
 const analyzeCodeFlow = ai.defineFlow(
