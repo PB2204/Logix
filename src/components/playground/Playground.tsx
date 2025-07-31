@@ -32,76 +32,64 @@ const languages = [
 const placeholders: Record<string, string> = {
     javascript: `// Welcome to Logix! Click Run to see the output.
 console.log(\`
- _                 _        
-| |               (_)       
-| |    ___   __ _  _  _ __  
-| |   / _ \\ / _\` || || '_ \\ 
-| |__| (_) | (_| || || | | |
-\\____/\\___/ \\__, ||_||_| |_|
-             __/ |          
-            |___/           
+ _                 _   _ 
+| |               (_) | |
+| |    ___   __ _  _  | |
+| |   / _ \\ / _\` || | | |
+| |__| (_) | (_| || | |_|
+\\____/\\___/ \\__,_||_| (_)
 \`);`,
     python: `# Welcome to Logix! Click Run to see the output.
 print("""
- _                 _        
-| |               (_)       
-| |    ___   __ _  _  _ __  
-| |   / _ \\ / _\` || || '_ \\ 
-| |__| (_) | (_| || || | | |
-\\____/\\___/ \\__, ||_||_| |_|
-             __/ |          
-            |___/           
+ _                 _   _ 
+| |               (_) | |
+| |    ___   __ _  _  | |
+| |   / _ \\ / _\` || | | |
+| |__| (_) | (_| || | |_|
+\\____/\\___/ \\__,_||_| (_)
 """)`,
     java: `// Welcome to Logix! Click Run to see the output.
 public class Main {
     public static void main(String[] args) {
-        System.out.println(" _                 _        ");
-        System.out.println("| |               (_)       ");
-        System.out.println("| |    ___   __ _  _  _ __  ");
-        System.out.println("| |   / _ \\\\ / _\` || || '_ \\\\ ");
-        System.out.println("| |__| (_) | (_| || || | | |");
-        System.out.println("\\\\____/\\\\___/ \\\\__, ||_||_| |_|");
-        System.out.println("             __/ |          ");
-        System.out.println("            |___/           ");
+        System.out.println(" _                 _   _ ");
+        System.out.println("| |               (_) | |");
+        System.out.println("| |    ___   __ _  _  | |");
+        System.out.println("| |   / _ \\\\ / _\` || | | |");
+        System.out.println("| |__| (_) | (_| || | |_|");
+        System.out.println("\\\\____/\\\\___/ \\\\__,_||_| (_)");
     }
 }`,
     cpp: `// Welcome to Logix! Click Run to see the output.
 #include <iostream>
 
 int main() {
-    std::cout << " _                 _        " << std::endl;
-    std::cout << "| |               (_)       " << std::endl;
-    std::cout << "| |    ___   __ _  _  _ __  " << std::endl;
-    std::cout << "| |   / _ \\\\ / _\` || || '_ \\\\ " << std::endl;
-    std::cout << "| |__| (_) | (_| || || | | |" << std::endl;
-    std::cout << "\\\\____/\\\\___/ \\\\__, ||_||_| |_|" << std::endl;
-    std::cout << "             __/ |          " << std::endl;
-    std::cout << "            |___/           " << std::endl;
+    std::cout << " _                 _   _ " << std::endl;
+    std::cout << "| |               (_) | |" << std::endl;
+    std::cout << "| |    ___   __ _  _  | |" << std::endl;
+    std::cout << "| |   / _ \\\\ / _\` || | | |" << std::endl;
+    std::cout << "| |__| (_) | (_| || | |_|" << std::endl;
+    std::cout << "\\\\____/\\\\___/ \\\\__,_||_| (_)" << std::endl;
     return 0;
 }`,
     typescript: `// Welcome to Logix! Click Run to see the output.
 console.log(\`
- _                 _        
-| |               (_)       
-| |    ___   __ _  _  _ __  
-| |   / _ \\ / _\` || || '_ \\ 
-| |__| (_) | (_| || || | | |
-\\____/\\___/ \\__, ||_||_| |_|
-             __/ |          
-            |___/           
+ _                 _   _ 
+| |               (_) | |
+| |    ___   __ _  _  | |
+| |   / _ \\ / _\` || | | |
+| |__| (_) | (_| || | |_|
+\\____/\\___/ \\__,_||_| (_)
 \`);`,
     c: `// Welcome to Logix! Click Run to see the output.
 #include <stdio.h>
 
 int main() {
-    printf(" _                 _        \\n");
-    printf("| |               (_)       \\n");
-    printf("| |    ___   __ _  _  _ __  \\n");
-    printf("| |   / _ \\\\ / _\` || || '_ \\\\ \\n");
-    printf("| |__| (_) | (_| || || | | |\\n");
-    printf("\\\\____/\\\\___/ \\\\__, ||_||_| |_|\\n");
-    printf("             __/ |          \\n");
-    printf("            |___/           \\n");
+    printf(" _                 _   _ \\n");
+    printf("| |               (_) | |\\n");
+    printf("| |    ___   __ _  _  | |\\n");
+    printf("| |   / _ \\\\ / _\` || | | |\\n");
+    printf("| |__| (_) | (_| || | |_|\\n");
+    printf("\\\\____/\\\\___/ \\\\__,_||_| (_)\\n");
     return 0;
 }`,
 };
