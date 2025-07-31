@@ -7,7 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Wand2, Play, Loader, Copy, Check, BarChart3, Clock, Scale } from "lucide-react";
-import { analyzeCode, analyzeCodeComplexity, CodeComplexityAnalysisOutput } from "@/ai/flows/code-complexity-analysis";
+import { analyzeCode } from "@/ai/flows/code-analysis";
+import { analyzeCodeComplexity, type CodeComplexityAnalysisOutput } from "@/ai/flows/code-complexity-analysis";
 import { CodeEditor } from "./CodeEditor";
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -254,4 +255,3 @@ export function Playground() {
     </div>
   );
 }
-

@@ -12,9 +12,6 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-// Re-exporting from code-analysis to avoid duplication
-export { analyzeCode, type CodeAnalysisInput, type CodeAnalysisOutput } from './code-analysis';
-
 const ComplexitySchema = z.object({
     bestNotation: z.string().describe('Big O notation for the best-case scenario (e.g., O(1), O(n log n)).'),
     averageNotation: z.string().describe('Big O notation for the average-case scenario (e.g., O(n), O(n^2)).'),
