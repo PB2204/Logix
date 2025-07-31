@@ -3,11 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, CodeXml, Bot, BookOpenCheck, ArrowRight, BrainCircuit, Lightbulb, GraduationCap, Bug } from 'lucide-react';
 import Link from 'next/link';
+import { AnimatedShapes } from '@/components/shared/AnimatedShapes';
 
 const HeroSection = () => (
   <section className="w-full py-20 md:py-32 lg:py-40 relative overflow-hidden">
+    <AnimatedShapes />
     <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-    <div className="absolute inset-y-0 -left-1/2 -right-1/2 md:-left-1/4 md:-right-1/4 top-0 h-[150%] skew-y-[-12deg] bg-gradient-to-br from-primary/10 to-transparent transform-gpu"></div>
     <div className="container mx-auto text-center px-4 md:px-6 relative z-10">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-5xl font-headline font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl text-transparent bg-clip-text bg-gradient-primary">

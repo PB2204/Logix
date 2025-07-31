@@ -84,11 +84,16 @@ export default {
           '0%, 100%': { filter: 'brightness(1.2)', textShadow: '0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary))' },
           '50%': { filter: 'brightness(1.4)', textShadow: '0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary))' },
         },
+        'fall': {
+          '0%': { transform: 'translateY(-10vh) rotate(0deg)', opacity: '1' },
+          '100%': { transform: 'translateY(100vh) rotate(360deg)', opacity: '0' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'glow': 'glow 3s ease-in-out infinite',
+        'fall': 'fall linear infinite',
       },
       backgroundImage: {
         'grid-pattern': `linear-gradient(to right, hsl(var(--border) / 0.1) 1px, transparent 1px),
