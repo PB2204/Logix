@@ -4,9 +4,9 @@
 /**
  * @fileOverview Code execution flow.
  *
- * This file is a placeholder for a secure, sandboxed execution environment
- * like Judge0. In a real-world application, this would involve a secure
- * backend service. For this demo, we will simulate execution for all languages.
+ * This file uses an AI model to simulate the execution of code for various
+ * languages, providing a realistic playground experience without a dedicated
+ * sandbox environment.
  */
 
 import { ai } from '@/ai/genkit';
@@ -29,40 +29,30 @@ export async function executeCode(input: CodeExecutionInput): Promise<CodeExecut
   return executeCodeFlow(input);
 }
 
+const executionPrompt = ai.definePrompt({
+    name: 'codeExecutionPrompt',
+    input: { schema: CodeExecutionInputSchema },
+    output: { schema: CodeExecutionOutputSchema },
+    prompt: `You are a code execution engine. Simulate the execution of the following code and return the output.
+If the code produces an error, return the error message in the 'error' field.
+
+Language: {{{language}}}
+Code:
+\`\`\`{{{language}}}
+{{{code}}}
+\`\`\`
+`,
+});
+
+
 const executeCodeFlow = ai.defineFlow(
   {
     name: 'executeCodeFlow',
     inputSchema: CodeExecutionInputSchema,
     outputSchema: CodeExecutionOutputSchema,
   },
-  async ({ code, language }) => {
-    // In a real application, you would use a secure sandbox like Judge0.
-    // This is a mock implementation for demonstration purposes.
-
-    const helloLogixPatterns: Record<string, string[]> = {
-        python: ['print("Hello, Logix!")', "print('Hello, Logix!')"],
-        java: ['System.out.println("Hello, Logix!");'],
-        cpp: ['std::cout << "Hello, Logix!"'],
-        c: ['printf("Hello, Logix!");'],
-        javascript: ['console.log("Hello, Logix!")', "console.log('Hello, Logix!')"],
-        typescript: ['console.log("Hello, Logix!")', "console.log('Hello, Logix!')"],
-    };
-
-    const patterns = helloLogixPatterns[language];
-    if (patterns) {
-        for (const pattern of patterns) {
-            if (code.includes(pattern)) {
-                return {
-                    output: 'Hello, Logix!',
-                };
-            }
-        }
-    }
-
-    // Generic success message if no specific pattern is matched
-    return {
-        output: 'Code executed successfully.',
-        error: '',
-    };
+  async (input) => {
+    const { output } = await executionPrompt(input);
+    return output!;
   }
 );
