@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { queryComputerScienceQuestion } from "@/ai/flows/query-computer-science-questions";
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { coldarkDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 
 
@@ -34,15 +34,15 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     };
 
     return !inline && match ? (
-        <div className="my-2 rounded-md bg-secondary/50 text-foreground border border-border">
-            <div className="flex items-center justify-between rounded-t-md bg-secondary px-4 py-2">
-                <span className="text-sm font-code text-muted-foreground">{match[1]}</span>
-                <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7">
+        <div className="my-2 rounded-md bg-black text-white border border-border">
+            <div className="flex items-center justify-between rounded-t-md bg-gray-800 px-4 py-2">
+                <span className="text-sm font-code text-gray-400">{match[1]}</span>
+                <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7 text-white hover:bg-gray-700">
                     {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
                 </Button>
             </div>
             <SyntaxHighlighter
-                style={vscDarkPlus}
+                style={coldarkDark}
                 language={match[1]}
                 PreTag="div"
                 {...props}
