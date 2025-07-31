@@ -4,16 +4,16 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Wand2, Play, Loader } from "lucide-react";
 import { analyzeCode } from "@/ai/flows/code-analysis";
+import { CodeEditor } from "./CodeEditor";
 
 const languages = [
   { value: "javascript", label: "JavaScript" },
   { value: "python", label: "Python" },
   { value: "java", label: "Java" },
-  { value: "c++", label: "C++" },
+  { value: "cpp", label: "C++" },
   { value: "typescript", label: "TypeScript" },
   { value: "c", label: "C" },
 ];
@@ -22,7 +22,7 @@ const placeholders: Record<string, string> = {
     javascript: "console.log('Hello, Logix!');",
     python: "print('Hello, Logix!')",
     java: `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, Logix!");\n    }\n}`,
-    'c++': `#include <iostream>\n\nint main() {\n    std::cout << "Hello, Logix!" << std::endl;\n    return 0;\n}`,
+    cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Hello, Logix!" << std::endl;\n    return 0;\n}`,
     typescript: "console.log('Hello, Logix!');",
     c: `#include <stdio.h>\n\nint main() {\n   printf("Hello, Logix!");\n   return 0;\n}`,
 };
@@ -67,6 +67,9 @@ export function Playground() {
         setIsExecuting(false);
     }, 1000)
   };
+  
+  const displayLanguage = languages.find(l => l.value === language)?.value || 'javascript';
+
 
   return (
     <div className="flex flex-col md:flex-row gap-6 h-full">
@@ -93,13 +96,13 @@ export function Playground() {
             </Button>
           </div>
         </div>
-        <Card className="flex-1">
+        <Card className="flex-1 bg-[#282c34] overflow-hidden">
           <CardContent className="p-0 h-full">
-            <Textarea
+            <CodeEditor
               value={code}
-              onChange={(e) => setCode(e.target.value)}
+              onValueChange={setCode}
+              language={displayLanguage}
               placeholder="Enter your code here"
-              className="w-full h-full font-code text-sm resize-none border-0 focus-visible:ring-1"
             />
           </CardContent>
         </Card>
