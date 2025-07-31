@@ -163,10 +163,12 @@ const formatLog = (log: {type: string, data: any[]}) => {
     
     let prefix = log.type.charAt(0).toUpperCase() + log.type.slice(1);
     let color = 'text-white';
+    let showPrefix = true;
 
     switch(log.type) {
         case 'log':
             color = 'text-white';
+            showPrefix = false;
             break;
         case 'error':
             color = 'text-red-500';
@@ -185,8 +187,8 @@ const formatLog = (log: {type: string, data: any[]}) => {
     }
     
     return <div className={cn('flex items-start', color)}>
-        <span className="w-20 font-bold opacity-70">[{prefix}]</span>
-        <pre className="whitespace-pre-wrap flex-1">{formattedData}</pre>
+        {showPrefix && <span className="w-20 font-bold opacity-70">[{prefix}]</span>}
+        <pre className={cn("whitespace-pre-wrap flex-1", !showPrefix && "pl-20")}>{formattedData}</pre>
     </div>;
 }
 
@@ -408,5 +410,3 @@ export function Playground() {
     </div>
   );
 }
-
-    
