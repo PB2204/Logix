@@ -6,11 +6,11 @@
   :root {
     --gradient-angle: 120deg;
     
-    --gradient-primary-from: 188 89% 45%;
-    --gradient-primary-to: 198 93% 60%;
+    --gradient-primary-from: 320 80% 60%;
+    --gradient-primary-to: 35 90% 55%;
     
     --gradient-accent-from: 300 89% 61%;
-    --gradient-accent-to: 320 95% 70%;
+    --gradient-accent-to: 45 95% 55%;
     
     --gradient-background-from: 222 47.4% 11.2%;
     --gradient-background-to: 240 50% 5%;
@@ -30,8 +30,8 @@
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 188 89% 45%;
-    --primary-foreground: 222.2 47.4% 1.2%;
+    --primary: 320 80% 60%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 0 0% 100%;
@@ -47,7 +47,7 @@
 
     --border: 217.2 32.6% 22.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 198 93% 60%;
+    --ring: 35 90% 55%;
     --radius: 0.5rem;
   }
 }
