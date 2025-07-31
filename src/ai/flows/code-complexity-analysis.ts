@@ -32,7 +32,7 @@ const CodeComplexityAnalysisInputSchema = z.object({
 export type CodeComplexityAnalysisInput = z.infer<typeof CodeComplexityAnalysisInputSchema>;
 
 
-export const CodeComplexityAnalysisOutputSchema = z.object({
+const CodeComplexityAnalysisOutputSchema = z.object({
   time: ComplexitySchema.describe('The time complexity analysis of the provided code.'),
   space: ComplexitySchema.describe('The space complexity analysis of the provided code.'),
   graphData: z.array(GraphDataPointSchema).describe('An array of data points to plot for visualizing the growth of time and space complexity. Provide points for n = 10, 50, 100, 500, 1000.'),
