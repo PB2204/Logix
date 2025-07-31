@@ -17,6 +17,7 @@ import { coldarkDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 import { cn } from "@/lib/utils";
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Textarea } from "@/components/ui/textarea";
 
 
 const languages = [
@@ -29,12 +30,19 @@ const languages = [
 ];
 
 const placeholders: Record<string, string> = {
-    javascript: "console.log('Hello, Logix!');",
-    python: "print('Hello, Logix!')",
-    java: `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, Logix!");\n    }\n}`,
-    cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Hello, Logix!" << std::endl;\n    return 0;\n}`,
-    typescript: "console.log('Hello, Logix!');",
-    c: `#include <stdio.h>\n\nint main() {\n   printf("Hello, Logix!");\n   return 0;\n}`,
+    javascript: `// Try this example to test the input!
+const name = prompt("What is your name?");
+console.log("Hello, " + name + "!");`,
+    python: "# Input is not supported for Python yet.",
+    java: `// Input is not supported for Java yet.
+public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, Logix!");\n    }\n}`,
+    cpp: `// Input is not supported for C++ yet.
+#include <iostream>\n\nint main() {\n    std::cout << "Hello, Logix!" << std::endl;\n    return 0;\n}`,
+    typescript: `// Try this example to test the input!
+const name: string | null = prompt("What is your name?");
+console.log("Hello, " + name + "!");`,
+    c: `// Input is not supported for C yet.
+#include <stdio.h>\n\nint main() {\n   printf("Hello, Logix!");\n   return 0;\n}`,
 };
 
 const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
@@ -88,13 +96,16 @@ const formatContent = (content: string) => {
     );
   };
 
-const runCode = (code: string): { logs: any[], error: string | null } => {
+const runCode = (code: string, stdin: string): { logs: any[], error: string | null } => {
     const logs: any[] = [];
     let error: string | null = null;
+    let stdinLines = stdin.split('\n');
+    let stdinIndex = 0;
 
     const originalLog = console.log;
     const originalError = console.error;
     const originalWarn = console.warn;
+    const originalPrompt = window.prompt;
 
     console.log = (...args) => {
         logs.push({type: 'log', data: args});
@@ -105,6 +116,20 @@ const runCode = (code: string): { logs: any[], error: string | null } => {
     console.warn = (...args) => {
         logs.push({type: 'warn', data: args});
     };
+    // Override prompt to read from our simulated stdin
+    (window as any).prompt = (message?: string) => {
+        if (message) {
+            logs.push({type: 'log', data: [message]});
+        }
+        if (stdinIndex < stdinLines.length) {
+            const input = stdinLines[stdinIndex];
+            stdinIndex++;
+            logs.push({type: 'input', data: [input]});
+            return input;
+        }
+        return null;
+    };
+
 
     try {
         const result = new Function(code)();
@@ -118,6 +143,7 @@ const runCode = (code: string): { logs: any[], error: string | null } => {
         console.log = originalLog;
         console.error = originalError;
         console.warn = originalWarn;
+        window.prompt = originalPrompt;
     }
 
     return { logs, error };
@@ -134,14 +160,29 @@ const formatLog = (log: {type: string, data: any[]}) => {
         }
         return String(item);
     }).join(' ');
+    
+    let prefix = log.type.charAt(0).toUpperCase() + log.type.slice(1);
+    let color = 'text-white';
 
-    const prefix = log.type.charAt(0).toUpperCase() + log.type.slice(1);
-    const color = {
-      log: 'text-white',
-      error: 'text-red-500',
-      warn: 'text-yellow-500',
-      return: 'text-blue-400',
-    }[log.type] || 'text-white';
+    switch(log.type) {
+        case 'log':
+            color = 'text-white';
+            break;
+        case 'error':
+            color = 'text-red-500';
+            break;
+        case 'warn':
+            color = 'text-yellow-500';
+            break;
+        case 'return':
+            color = 'text-blue-400';
+            prefix = 'Return';
+            break;
+        case 'input':
+            color = 'text-green-400';
+            prefix = 'Input';
+            break;
+    }
     
     return <div className={cn('flex items-start', color)}>
         <span className="w-20 font-bold opacity-70">[{prefix}]</span>
@@ -153,6 +194,7 @@ const formatLog = (log: {type: string, data: any[]}) => {
 export function Playground() {
   const [language, setLanguage] = useState(languages[0].value);
   const [code, setCode] = useState(placeholders[languages[0].value]);
+  const [stdin, setStdin] = useState("");
   const [output, setOutput] = useState<CodeExecutionOutput | null>(null);
   const [clientOutput, setClientOutput] = useState<{logs: any[], error: string | null} | null>(null);
   const [analysis, setAnalysis] = useState("");
@@ -199,7 +241,7 @@ export function Playground() {
         setClientOutput(null);
 
         if (language === 'javascript' || language === 'typescript') {
-            const result = runCode(language === 'typescript' ? (window as any).ts.transpile(code) : code);
+            const result = runCode(language === 'typescript' ? (window as any).ts.transpile(code) : code, stdin);
             setClientOutput(result);
         } else {
             try {
@@ -248,16 +290,23 @@ export function Playground() {
             </Button>
           </div>
         </div>
-        <Card className="flex-1 bg-transparent overflow-hidden border-0 shadow-none">
-          <CardContent className="p-0 h-full">
+        <Card className="flex-1 bg-transparent overflow-hidden border-0 shadow-none h-3/5">
             <CodeEditor
               value={code}
               onValueChange={setCode}
               language={displayLanguage}
               placeholder="Enter your code here"
             />
-          </CardContent>
         </Card>
+        <div className="flex flex-col gap-2 h-2/5">
+            <h3 className="text-sm font-medium text-muted-foreground">Input (for prompt)</h3>
+            <Textarea 
+                value={stdin}
+                onChange={(e) => setStdin(e.target.value)}
+                placeholder="Provide input for your code, one line per prompt."
+                className="flex-1 bg-gradient-card font-code text-sm resize-none"
+            />
+        </div>
       </div>
       <div className="w-full md:w-1/2 h-full">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
@@ -359,3 +408,5 @@ export function Playground() {
     </div>
   );
 }
+
+    
