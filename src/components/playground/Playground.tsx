@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useState } from "react";
@@ -166,7 +164,7 @@ export function Playground() {
               {isAnalyzing ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
               Analyze
             </Button>
-            <Button onClick={handleExecute} disabled={isExecuting} style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }}>
+            <Button onClick={handleExecute} disabled={isExecuting} className="bg-gradient-accent text-white">
               {isExecuting ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : <Play className="mr-2 h-4 w-4" />}
               Run
             </Button>
@@ -191,9 +189,9 @@ export function Playground() {
             <TabsTrigger value="complexity">Complexity</TabsTrigger>
           </TabsList>
           <TabsContent value="output" className="flex-1 min-h-0">
-            <Card className="h-full">
+            <Card className="h-full bg-gradient-card">
               <CardContent className="p-0 h-full">
-                <pre className="p-4 bg-muted h-full w-full overflow-auto rounded-md font-code text-sm">
+                <pre className="p-4 bg-transparent h-full w-full overflow-auto rounded-md font-code text-sm">
                     {isExecuting && <div className="flex items-center gap-2"><Loader className="h-4 w-4 animate-spin" /><span>Executing...</span></div>}
                     {!isExecuting && (output || "Code output will appear here.")}
                 </pre>
@@ -201,7 +199,7 @@ export function Playground() {
             </Card>
           </TabsContent>
           <TabsContent value="analysis" className="flex-1 min-h-0">
-            <Card className="h-full">
+            <Card className="h-full bg-gradient-card">
                 <CardContent className="p-4 h-full w-full overflow-auto">
                     {isAnalyzing && <div className="flex items-center gap-2 text-sm"><Loader className="h-4 w-4 animate-spin" /><span>Analyzing your code...</span></div>}
                     {!isAnalyzing && (analysis ? formatContent(analysis) : "AI code analysis and suggestions will appear here.")}
@@ -209,7 +207,7 @@ export function Playground() {
             </Card>
           </TabsContent>
           <TabsContent value="complexity" className="flex-1 min-h-0">
-            <Card className="h-full">
+            <Card className="h-full bg-gradient-card">
                 <CardContent className="p-4 h-full w-full overflow-auto">
                 {isAnalyzing && <div className="flex items-center gap-2 text-sm"><Loader className="h-4 w-4 animate-spin" /><span>Analyzing complexity...</span></div>}
                 {!isAnalyzing && complexity && (
@@ -233,14 +231,29 @@ export function Playground() {
                             <div className="h-60 w-full text-xs">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={complexity.graphData} margin={{ top: 5, right: 20, left: 10, bottom: 20 }}>
-                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2}/>
                                         <XAxis dataKey="n" label={{ value: "Input Size (n)", position: 'insideBottom', offset: -15 }}/>
                                         <YAxis yAxisId="left" label={{ value: 'Operations', angle: -90, position: 'insideLeft' }}/>
                                         <YAxis yAxisId="right" orientation="right" label={{ value: 'Memory', angle: 90, position: 'insideRight' }}/>
-                                        <Tooltip />
+                                        <Tooltip 
+                                            contentStyle={{
+                                                backgroundColor: 'hsl(var(--background))',
+                                                borderColor: 'hsl(var(--border))'
+                                            }}
+                                        />
                                         <Legend verticalAlign="bottom" wrapperStyle={{paddingTop: 20}}/>
-                                        <Bar yAxisId="left" dataKey="time" fill="hsl(var(--primary))" name="Time Complexity" key="time" />
-                                        <Bar yAxisId="right" dataKey="space" fill="hsl(var(--accent))" name="Space Complexity" key="space" />
+                                        <Bar yAxisId="left" dataKey="time" fill="url(#colorTime)" name="Time Complexity" key="time" />
+                                        <Bar yAxisId="right" dataKey="space" fill="url(#colorSpace)" name="Space Complexity" key="space" />
+                                         <defs>
+                                            <linearGradient id="colorTime" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="5%" stopColor="hsl(var(--gradient-primary-from))" stopOpacity={0.8}/>
+                                                <stop offset="95%" stopColor="hsl(var(--gradient-primary-to))" stopOpacity={0.8}/>
+                                            </linearGradient>
+                                            <linearGradient id="colorSpace" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="5%" stopColor="hsl(var(--gradient-accent-from))" stopOpacity={0.8}/>
+                                                <stop offset="95%" stopColor="hsl(var(--gradient-accent-to))" stopOpacity={0.8}/>
+                                            </linearGradient>
+                                        </defs>
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>

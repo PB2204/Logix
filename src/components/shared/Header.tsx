@@ -11,15 +11,15 @@ export default function Header() {
   ];
 
   return (
-    <header className="py-3 px-4 md:px-8 bg-background/80 backdrop-blur-sm sticky top-0 z-50 border-b border-border/50">
+    <header className="py-3 px-4 md:px-8 bg-background/50 backdrop-blur-sm sticky top-0 z-50 border-b border-border/50">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2 text-primary hover:brightness-125 transition-all">
           <BrainCircuit className="h-7 w-7" />
-          <span className="text-2xl font-bold font-headline">Logix</span>
+          <span className="text-2xl font-bold font-headline bg-gradient-primary bg-clip-text text-transparent">Logix</span>
         </Link>
         <nav className="hidden md:flex gap-6 items-center">
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors">
+            <Link key={link.href} href={link.href} className="text-sm font-medium text-foreground/70 hover:text-white transition-colors">
               {link.label}
             </Link>
           ))}
@@ -28,7 +28,7 @@ export default function Header() {
           <Button variant="ghost" asChild>
             <Link href="/login">Login</Link>
           </Button>
-          <Button style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }} asChild>
+          <Button className="bg-gradient-accent text-white" asChild>
             <Link href="/signup">Sign Up</Link>
           </Button>
         </div>
@@ -40,7 +40,7 @@ export default function Header() {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right">
+            <SheetContent side="right" className="bg-gradient-card">
               <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
               <div className="flex flex-col gap-6 pt-10">
                 {navLinks.map((link) => (
@@ -50,7 +50,7 @@ export default function Header() {
                 ))}
                 <div className="border-t pt-6 flex flex-col gap-4">
                   <Button variant="ghost" asChild><Link href="/login">Login</Link></Button>
-                  <Button style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }} asChild><Link href="/signup">Sign Up</Link></Button>
+                  <Button className="bg-gradient-accent text-white" asChild><Link href="/signup">Sign Up</Link></Button>
                 </div>
               </div>
             </SheetContent>

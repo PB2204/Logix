@@ -69,7 +69,7 @@ export default function StudyMaterialsPage() {
         
         {studyData.map(data => (
           <TabsContent key={data.semester} value={`semester-${data.semester}`}>
-            <Card>
+            <Card className="bg-gradient-card">
               <CardHeader>
                 <CardTitle>Semester {data.semester} Subjects</CardTitle>
                 <CardDescription>Select a subject to view its topics and materials.</CardDescription>
@@ -82,7 +82,7 @@ export default function StudyMaterialsPage() {
                       <AccordionContent>
                         <div className="flex flex-col gap-3 pl-4">
                           {subject.topics.map(topic => (
-                             <div key={topic} className="flex justify-between items-center p-3 rounded-md border hover:bg-muted/50 transition-colors">
+                             <div key={topic} className="flex justify-between items-center p-3 rounded-md border border-border/50 bg-background/30 hover:bg-muted/50 transition-colors">
                                <div className="flex items-center gap-3">
                                  <FileText className="w-5 h-5 text-primary"/>
                                  <span>{topic} Notes.pdf</span>

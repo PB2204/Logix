@@ -148,7 +148,7 @@ export function ChatInterface() {
             >
               {message.role === "bot" && (
                 <Avatar className="h-9 w-9">
-                    <div className="flex h-full w-full items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-primary text-primary-foreground">
                         <Bot className="h-5 w-5" />
                     </div>
                 </Avatar>
@@ -157,8 +157,8 @@ export function ChatInterface() {
                 className={cn(
                   "max-w-xs md:max-w-md lg:max-w-2xl rounded-lg p-3 text-sm",
                   message.role === "user"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-card text-card-foreground border"
+                    ? "bg-gradient-accent text-white"
+                    : "bg-gradient-card border"
                 )}
               >
                 {message.isLoading ? (
@@ -170,7 +170,7 @@ export function ChatInterface() {
               </div>
               {message.role === "user" && (
                 <Avatar className="h-9 w-9">
-                    <div className="flex h-full w-full items-center justify-center rounded-full bg-accent text-accent-foreground">
+                    <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-accent text-accent-foreground">
                         <User className="h-5 w-5" />
                     </div>
                 </Avatar>

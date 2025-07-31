@@ -61,7 +61,7 @@ export function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }}>
+        <Button type="submit" className="w-full bg-gradient-accent text-white">
           Login
         </Button>
       </form>
