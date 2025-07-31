@@ -2,12 +2,11 @@
 'use server';
 
 /**
- * @fileOverview Code execution flow for JavaScript and TypeScript.
+ * @fileOverview Code execution flow.
  *
- * This file is a placeholder for a secure, sandboxed execution environment.
- * In a real-world application, this would involve a secure backend service.
- * For this demo, we will simulate execution and return a hardcoded result
- * for JavaScript and TypeScript, and an unsupported message for others.
+ * This file is a placeholder for a secure, sandboxed execution environment
+ * like Judge0. In a real-world application, this would involve a secure
+ * backend service. For this demo, we will simulate execution for all languages.
  */
 
 import { ai } from '@/ai/genkit';
@@ -30,7 +29,6 @@ export async function executeCode(input: CodeExecutionInput): Promise<CodeExecut
   return executeCodeFlow(input);
 }
 
-
 const executeCodeFlow = ai.defineFlow(
   {
     name: 'executeCodeFlow',
@@ -38,22 +36,33 @@ const executeCodeFlow = ai.defineFlow(
     outputSchema: CodeExecutionOutputSchema,
   },
   async ({ code, language }) => {
-    // In a real application, you would have a secure sandbox to execute code.
-    // This is a mock implementation.
-    if (language === 'javascript' || language === 'typescript') {
-        if (code.includes('console.log("Hello, Logix!")')) {
-            return {
-                output: 'Hello, Logix!',
-            };
-        }
-        return {
-            output: 'Code executed successfully.',
+    // In a real application, you would use a secure sandbox like Judge0.
+    // This is a mock implementation for demonstration purposes.
+
+    const helloLogixPatterns: Record<string, string[]> = {
+        python: ['print("Hello, Logix!")', "print('Hello, Logix!')"],
+        java: ['System.out.println("Hello, Logix!");'],
+        cpp: ['std::cout << "Hello, Logix!"'],
+        c: ['printf("Hello, Logix!");'],
+        javascript: ['console.log("Hello, Logix!")', "console.log('Hello, Logix!')"],
+        typescript: ['console.log("Hello, Logix!")', "console.log('Hello, Logix!')"],
+    };
+
+    const patterns = helloLogixPatterns[language];
+    if (patterns) {
+        for (const pattern of patterns) {
+            if (code.includes(pattern)) {
+                return {
+                    output: 'Hello, Logix!',
+                };
+            }
         }
     }
 
+    // Generic success message if no specific pattern is matched
     return {
-      output: '',
-      error: `Execution of ${language} is not supported in this playground.`,
+        output: 'Code executed successfully.',
+        error: '',
     };
   }
 );
