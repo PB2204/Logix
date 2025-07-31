@@ -12,7 +12,6 @@ import 'prismjs/components/prism-c';
 import 'prismjs/components/prism-cpp';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/themes/prism-tomorrow.css';
-import { cn } from '@/lib/utils';
 
 interface CodeEditorProps {
     value: string;
@@ -30,12 +29,13 @@ export function CodeEditor({ value, onValueChange, language, placeholder }: Code
         fontSize: 14,
         lineHeight: '1.5',
         color: '#f8f8f2',
+        minHeight: '100%',
     };
 
     return (
-        <div className="relative h-full w-full font-code text-sm flex">
+        <div className="relative h-full w-full font-code text-sm flex overflow-auto">
             <div 
-                className="w-12 text-right pr-4 text-gray-500 select-none"
+                className="w-12 text-right pr-4 text-gray-500 select-none sticky left-0 bg-[#282c34] z-10"
                 style={{
                     fontFamily: editorStyle.fontFamily,
                     fontSize: editorStyle.fontSize,
@@ -54,7 +54,7 @@ export function CodeEditor({ value, onValueChange, language, placeholder }: Code
                 highlight={(code) => highlight(code, languages[lang], lang)}
                 padding={{ top: 16, bottom: 16, left: 10, right: 16 }}
                 textareaId="code-editor"
-                className="h-full w-full bg-transparent !outline-none"
+                className="w-full !outline-none"
                 style={editorStyle}
                 placeholder={placeholder}
             />

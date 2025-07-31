@@ -172,7 +172,7 @@ export function Playground() {
             </Button>
           </div>
         </div>
-        <Card className="flex-1 bg-[#282c34] overflow-hidden">
+        <Card className="flex-1 bg-[#282c34]">
           <CardContent className="p-0 h-full">
             <CodeEditor
               value={code}
