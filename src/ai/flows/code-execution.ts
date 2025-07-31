@@ -13,13 +13,13 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
-export const CodeExecutionInputSchema = z.object({
+const CodeExecutionInputSchema = z.object({
   code: z.string().describe('The code to be executed.'),
   language: z.string().describe('The programming language of the code.'),
 });
 export type CodeExecutionInput = z.infer<typeof CodeExecutionInputSchema>;
 
-export const CodeExecutionOutputSchema = z.object({
+const CodeExecutionOutputSchema = z.object({
   output: z.string().describe('The stdout of the executed code.'),
   error: z.string().optional().describe('The stderr of the executed code, if any.'),
 });
