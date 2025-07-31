@@ -70,7 +70,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
                 language={match[1]}
                 PreTag="div"
                 {...props}
-                className="!p-4 !m-0 !bg-transparent overflow-auto"
+                className="!p-4 !m-0 !bg-transparent overflow-x-auto"
             >
                 {code}
             </SyntaxHighlighter>
@@ -292,7 +292,7 @@ export function Playground() {
             </Button>
           </div>
         </div>
-        <Card className="flex-1 bg-transparent overflow-hidden border-0 shadow-none h-3/5">
+        <Card className="flex-1 bg-transparent overflow-hidden border-0 shadow-none">
             <CodeEditor
               value={code}
               onValueChange={setCode}
@@ -300,18 +300,9 @@ export function Playground() {
               placeholder="Enter your code here"
             />
         </Card>
-        <div className="flex flex-col gap-2 h-2/5">
-            <h3 className="text-sm font-medium text-muted-foreground">Input (for prompt)</h3>
-            <Textarea 
-                value={stdin}
-                onChange={(e) => setStdin(e.target.value)}
-                placeholder="Provide input for your code, one line per prompt."
-                className="flex-1 bg-gradient-card font-code text-sm resize-none"
-            />
-        </div>
       </div>
-      <div className="w-full md:w-1/2 h-full">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
+      <div className="w-full md:w-1/2 h-full flex flex-col gap-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="output">Output</TabsTrigger>
             <TabsTrigger value="analysis">Analysis</TabsTrigger>
@@ -406,6 +397,15 @@ export function Playground() {
             </Card>
           </TabsContent>
         </Tabs>
+        <div className="flex flex-col gap-2 h-2/5 max-h-48">
+            <h3 className="text-sm font-medium text-muted-foreground">Input (for prompt)</h3>
+            <Textarea 
+                value={stdin}
+                onChange={(e) => setStdin(e.target.value)}
+                placeholder="Provide input for your code, one line per prompt."
+                className="flex-1 bg-gradient-card font-code text-sm resize-none"
+            />
+        </div>
       </div>
     </div>
   );
