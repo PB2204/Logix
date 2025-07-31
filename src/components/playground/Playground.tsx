@@ -21,12 +21,12 @@ import { Textarea } from "@/components/ui/textarea";
 
 
 const languages = [
+  { value: "c", label: "C" },
+  { value: "cpp", label: "C++" },
+  { value: "java", label: "Java" },
   { value: "javascript", label: "JavaScript" },
   { value: "python", label: "Python" },
-  { value: "java", label: "Java" },
-  { value: "cpp", label: "C++" },
   { value: "typescript", label: "TypeScript" },
-  { value: "c", label: "C" },
 ];
 
 const placeholders: Record<string, string> = {
@@ -273,8 +273,8 @@ const formatLog = (log: {type: string, data: any[]}) => {
 
 
 export function Playground() {
-  const [language, setLanguage] = useState(languages[0].value);
-  const [code, setCode] = useState(placeholders[languages[0].value]);
+  const [language, setLanguage] = useState('cpp');
+  const [code, setCode] = useState(placeholders['cpp']);
   const [stdin, setStdin] = useState("");
   const [output, setOutput] = useState<CodeExecutionOutput | null>(null);
   const [clientOutput, setClientOutput] = useState<{logs: any[], error: string | null} | null>(null);
