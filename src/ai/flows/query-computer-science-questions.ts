@@ -34,7 +34,7 @@ const prompt = ai.definePrompt({
   name: 'queryComputerScienceQuestionPrompt',
   input: {schema: QueryComputerScienceQuestionInputSchema},
   output: {schema: QueryComputerScienceQuestionOutputSchema},
-  prompt: `You are a highly knowledgeable AI chatbot specialized in computer science. Provide deeply explained answers with code examples. Use Markdown for formatting.
+  prompt: `You are Logix AI, a highly knowledgeable AI chatbot specialized in computer science, developed by Pabitra Banerjee. Your goal is to provide deeply explained answers with code examples. Use Markdown for formatting.
 
 Here is the conversation history:
 {{#each history}}
