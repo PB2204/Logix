@@ -201,7 +201,7 @@ export function Playground() {
   const [clientOutput, setClientOutput] = useState<{logs: any[], error: string | null} | null>(null);
   const [analysis, setAnalysis] = useState("");
   const [complexity, setComplexity] = useState<CodeComplexityAnalysisOutput | null>(null);
-  const [activeTab, setActiveTab] = useState("output");
+  const [activeTab, setActiveTab] = useState("input");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isExecuting, setIsExecuting] =useState(false);
 
@@ -260,13 +260,6 @@ export function Playground() {
   
   const displayLanguage = languages.find(l => l.value === language)?.value || 'javascript';
 
-  const complexityData = [
-    { name: "Best Case", time: complexity?.time.best, space: complexity?.space.best },
-    { name: "Average Case", time: complexity?.time.average, space: complexity?.space.average },
-    { name: "Worst Case", time: complexity?.time.worst, space: complexity?.space.worst },
-  ].filter(d => d.time !== undefined && d.space !== undefined);
-
-
   return (
     <div className="flex flex-col md:flex-row gap-6 h-full">
       <div className="flex flex-col gap-4 w-full md:w-1/2 h-full">
@@ -303,11 +296,24 @@ export function Playground() {
       </div>
       <div className="w-full md:w-1/2 h-full flex flex-col gap-4">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="input">Input</TabsTrigger>
             <TabsTrigger value="output">Output</TabsTrigger>
             <TabsTrigger value="analysis">Analysis</TabsTrigger>
             <TabsTrigger value="complexity">Complexity</TabsTrigger>
           </TabsList>
+           <TabsContent value="input" className="flex-1 min-h-0">
+                <Card className="h-full bg-gradient-card">
+                    <CardContent className="p-0 h-full">
+                        <Textarea
+                            value={stdin}
+                            onChange={(e) => setStdin(e.target.value)}
+                            placeholder="Provide input for your code, with each prompt on a new line."
+                            className="h-full bg-transparent border-0 resize-none font-code text-sm p-4"
+                        />
+                    </CardContent>
+                </Card>
+           </TabsContent>
           <TabsContent value="output" className="flex-1 min-h-0">
             <Card className="h-full bg-gradient-card">
                 <CardContent className="p-0 h-full">
@@ -397,15 +403,6 @@ export function Playground() {
             </Card>
           </TabsContent>
         </Tabs>
-        <div className="flex flex-col gap-2 h-2/5 max-h-48">
-            <h3 className="text-sm font-medium text-muted-foreground">Input (for prompt)</h3>
-            <Textarea 
-                value={stdin}
-                onChange={(e) => setStdin(e.target.value)}
-                placeholder="Provide input for your code, one line per prompt."
-                className="flex-1 bg-gradient-card font-code text-sm resize-none"
-            />
-        </div>
       </div>
     </div>
   );
