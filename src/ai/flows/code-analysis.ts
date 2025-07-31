@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -18,7 +19,7 @@ const CodeAnalysisInputSchema = z.object({
 export type CodeAnalysisInput = z.infer<typeof CodeAnalysisInputSchema>;
 
 const CodeAnalysisOutputSchema = z.object({
-  suggestions: z.string().describe('AI-powered suggestions for improving the code.'),
+  suggestions: z.string().describe('AI-powered suggestions for improving the code, formatted in Markdown.'),
 });
 export type CodeAnalysisOutput = z.infer<typeof CodeAnalysisOutputSchema>;
 
@@ -30,11 +31,13 @@ const prompt = ai.definePrompt({
   name: 'codeAnalysisPrompt',
   input: {schema: CodeAnalysisInputSchema},
   output: {schema: CodeAnalysisOutputSchema},
-  prompt: `You are an AI code analysis tool. Analyze the following code and provide suggestions for improvement, including efficiency, bug fixes, and best practices.
+  prompt: `You are an AI code analysis tool. Analyze the following code and provide suggestions for improvement, including efficiency, bug fixes, and best practices. Format your response using Markdown, including code blocks for examples.
 
 Language: {{{language}}}
 Code:
-\`\`\`{{{code}}}\`\`\``,
+\`\`\`{{{language}}}
+{{{code}}}
+\`\`\``,
 });
 
 const analyzeCodeFlow = ai.defineFlow(
