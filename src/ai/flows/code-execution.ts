@@ -15,6 +15,7 @@ import { z } from 'genkit';
 const CodeExecutionInputSchema = z.object({
   code: z.string().describe('The code to be executed.'),
   language: z.string().describe('The programming language of the code.'),
+  stdin: z.string().optional().describe('The standard input to provide to the code.'),
 });
 export type CodeExecutionInput = z.infer<typeof CodeExecutionInputSchema>;
 
@@ -35,6 +36,12 @@ const executionPrompt = ai.definePrompt({
     output: { schema: CodeExecutionOutputSchema },
     prompt: `You are a code execution engine. Simulate the execution of the following code and return the output.
 If the code produces an error, return the error message in the 'error' field.
+{{#if stdin}}
+The code will receive the following as its standard input:
+---
+{{{stdin}}}
+---
+{{/if}}
 
 Language: {{{language}}}
 Code:

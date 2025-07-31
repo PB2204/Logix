@@ -33,16 +33,45 @@ const placeholders: Record<string, string> = {
     javascript: `// Try this example to test the input!
 const name = prompt("What is your name?");
 console.log("Hello, " + name + "!");`,
-    python: "# Input is not supported for Python yet.",
-    java: `// Input is not supported for Java yet.
-public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, Logix!");\n    }\n}`,
-    cpp: `// Input is not supported for C++ yet.
-#include <iostream>\n\nint main() {\n    std::cout << "Hello, Logix!" << std::endl;\n    return 0;\n}`,
+    python: `# Try this example to test the input!
+name = input("What is your name? ")
+print("Hello, " + name + "!")`,
+    java: `// Try this example to test the input!
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("What is your name? ");
+        String name = scanner.nextLine();
+        System.out.println("Hello, " + name + "!");
+        scanner.close();
+    }
+}`,
+    cpp: `// Try this example to test the input!
+#include <iostream>
+#include <string>
+
+int main() {
+    std::string name;
+    std::cout << "What is your name? ";
+    std::getline(std::cin, name);
+    std::cout << "Hello, " << name << "!" << std::endl;
+    return 0;
+}`,
     typescript: `// Try this example to test the input!
 const name: string | null = prompt("What is your name?");
 console.log("Hello, " + name + "!");`,
-    c: `// Input is not supported for C yet.
-#include <stdio.h>\n\nint main() {\n   printf("Hello, Logix!");\n   return 0;\n}`,
+    c: `// Try this example to test the input!
+#include <stdio.h>
+
+int main() {
+   char name[50];
+   printf("What is your name? ");
+   fgets(name, 50, stdin);
+   printf("Hello, %s", name);
+   return 0;
+}`,
 };
 
 const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
@@ -247,7 +276,7 @@ export function Playground() {
             setClientOutput(result);
         } else {
             try {
-                const result = await executeCode({ code, language });
+                const result = await executeCode({ code, language, stdin });
                 setOutput(result);
             } catch (error) {
                 console.error("Execution failed:", error);
