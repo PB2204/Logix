@@ -407,8 +407,8 @@ export function Playground() {
                         )}
                         {!isExecuting && output && (
                             <>
-                                {output.output && <pre>{output.output}</pre>}
-                                {output.error && <pre className="text-red-500 mt-2">{output.error}</pre>}
+                                {output.output && <pre className="whitespace-pre-wrap">{output.output}</pre>}
+                                {output.error && <pre className="text-red-500 mt-2 whitespace-pre-wrap">{output.error}</pre>}
                             </>
                         )}
                     </div>
