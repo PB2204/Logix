@@ -33,7 +33,7 @@ export function CodeEditor({ value, onValueChange, language, placeholder }: Code
     };
 
     return (
-        <div className="relative h-full w-full font-code text-sm flex overflow-auto">
+        <div className="relative h-full w-full font-code text-sm flex">
             <div 
                 className="w-12 text-right pr-4 text-gray-500 select-none sticky left-0 bg-[#282c34] z-10"
                 style={{
@@ -48,16 +48,18 @@ export function CodeEditor({ value, onValueChange, language, placeholder }: Code
                     <div key={i}>{i + 1}</div>
                 ))}
             </div>
-            <Editor
-                value={value}
-                onValueChange={onValueChange}
-                highlight={(code) => highlight(code, languages[lang], lang)}
-                padding={{ top: 16, bottom: 16, left: 10, right: 16 }}
-                textareaId="code-editor"
-                className="w-full !outline-none"
-                style={editorStyle}
-                placeholder={placeholder}
-            />
+            <div className="flex-1 overflow-auto">
+                <Editor
+                    value={value}
+                    onValueChange={onValueChange}
+                    highlight={(code) => highlight(code, languages[lang], lang)}
+                    padding={{ top: 16, bottom: 16, left: 10, right: 16 }}
+                    textareaId="code-editor"
+                    className="w-full !outline-none"
+                    style={editorStyle}
+                    placeholder={placeholder}
+                />
+            </div>
         </div>
     );
 }
