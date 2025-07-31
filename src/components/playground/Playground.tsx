@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState } from "react";
@@ -231,15 +232,15 @@ export function Playground() {
                             <CardTitle className="flex items-center gap-2 mb-4"><BarChart3 className="w-6 h-6 text-primary"/> Performance Growth</CardTitle>
                             <div className="h-60 w-full text-xs">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={complexity.graphData}>
+                                    <BarChart data={complexity.graphData} margin={{ top: 5, right: 20, left: 10, bottom: 20 }}>
                                         <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="n" label={{ value: "Input Size (n)", position: 'insideBottom', offset: -5 }}/>
+                                        <XAxis dataKey="n" label={{ value: "Input Size (n)", position: 'insideBottom', offset: -15 }}/>
                                         <YAxis yAxisId="left" label={{ value: 'Operations', angle: -90, position: 'insideLeft' }}/>
                                         <YAxis yAxisId="right" orientation="right" label={{ value: 'Memory', angle: 90, position: 'insideRight' }}/>
                                         <Tooltip />
-                                        <Legend />
-                                        <Bar yAxisId="left" dataKey="time" fill="hsl(var(--primary))" name="Time Complexity" />
-                                        <Bar yAxisId="right" dataKey="space" fill="hsl(var(--accent))" name="Space Complexity" />
+                                        <Legend verticalAlign="bottom" wrapperStyle={{paddingTop: 20}}/>
+                                        <Bar yAxisId="left" dataKey="time" fill="hsl(var(--primary))" name="Time Complexity" key="time" />
+                                        <Bar yAxisId="right" dataKey="space" fill="hsl(var(--accent))" name="Space Complexity" key="space" />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
