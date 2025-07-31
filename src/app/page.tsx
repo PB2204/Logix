@@ -10,8 +10,8 @@ const HeroSection = () => (
     <div className="absolute inset-y-0 -left-1/2 -right-1/2 md:-left-1/4 md:-right-1/4 top-0 h-[150%] skew-y-[-12deg] bg-gradient-to-br from-primary/10 to-transparent transform-gpu"></div>
     <div className="container mx-auto text-center px-4 md:px-6 relative z-10">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-5xl font-headline font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl text-transparent bg-clip-text bg-gradient-primary animate-glow">
-          Write this multicolor gradient
+        <h1 className="text-5xl font-headline font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl text-transparent bg-clip-text bg-gradient-primary">
+          Logix : Learn Logically
         </h1>
         <p className="mt-6 text-lg md:text-xl text-foreground/80">
           Your AI-Powered Learning Companion for Computer Science. Master complex topics, debug code with ease, and access all your study materials in one place.
