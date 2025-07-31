@@ -35,8 +35,8 @@ export function CodeEditor({ value, onValueChange, language, placeholder }: Code
 
     return (
         <div className="relative h-full w-full font-code text-sm overflow-auto bg-black rounded-md border border-border">
-            <div className="flex">
-                <div className="sticky left-0 z-10 select-none bg-black pr-4 text-right text-muted-foreground" style={{lineHeight: editorStyle.lineHeight, fontSize: editorStyle.fontSize}}>
+            <div className="flex min-w-max">
+                <div className="sticky left-0 z-10 select-none bg-black p-2 pr-4 text-right text-muted-foreground" style={{lineHeight: editorStyle.lineHeight, fontSize: editorStyle.fontSize}}>
                     {Array.from({ length: lineCount }, (_, i) => (
                         <div key={i}>{i + 1}</div>
                     ))}
@@ -45,9 +45,9 @@ export function CodeEditor({ value, onValueChange, language, placeholder }: Code
                     value={value}
                     onValueChange={onValueChange}
                     highlight={(code) => highlight(code, languages[lang], lang)}
-                    padding={0}
+                    padding={{ top: 8, bottom: 8, left: 8, right: 8 }}
                     textareaId="code-editor"
-                    className="flex-1 !outline-none"
+                    className="flex-1 !outline-none min-w-full"
                     style={editorStyle}
                     placeholder={placeholder}
                 />
