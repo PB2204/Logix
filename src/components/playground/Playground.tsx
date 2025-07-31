@@ -30,47 +30,79 @@ const languages = [
 ];
 
 const placeholders: Record<string, string> = {
-    javascript: `// Try this example to test the input!
-const name = prompt("What is your name?");
-console.log("Hello, " + name + "!");`,
-    python: `# Try this example to test the input!
-name = input("What is your name? ")
-print("Hello, " + name + "!")`,
-    java: `// Try this example to test the input!
-import java.util.Scanner;
-
+    javascript: `// Welcome to Logix! Click Run to see the output.
+console.log(\`
+ _                 _        
+| |               (_)       
+| |    ___   __ _  _  _ __  
+| |   / _ \\ / _\` || || '_ \\ 
+| |__| (_) | (_| || || | | |
+\\____/\\___/ \\__, ||_||_| |_|
+             __/ |          
+            |___/           
+\`);`,
+    python: `# Welcome to Logix! Click Run to see the output.
+print("""
+ _                 _        
+| |               (_)       
+| |    ___   __ _  _  _ __  
+| |   / _ \\ / _\` || || '_ \\ 
+| |__| (_) | (_| || || | | |
+\\____/\\___/ \\__, ||_||_| |_|
+             __/ |          
+            |___/           
+""")`,
+    java: `// Welcome to Logix! Click Run to see the output.
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("What is your name? ");
-        String name = scanner.nextLine();
-        System.out.println("Hello, " + name + "!");
-        scanner.close();
+        System.out.println(" _                 _        ");
+        System.out.println("| |               (_)       ");
+        System.out.println("| |    ___   __ _  _  _ __  ");
+        System.out.println("| |   / _ \\\\ / _\` || || '_ \\\\ ");
+        System.out.println("| |__| (_) | (_| || || | | |");
+        System.out.println("\\\\____/\\\\___/ \\\\__, ||_||_| |_|");
+        System.out.println("             __/ |          ");
+        System.out.println("            |___/           ");
     }
 }`,
-    cpp: `// Try this example to test the input!
+    cpp: `// Welcome to Logix! Click Run to see the output.
 #include <iostream>
-#include <string>
 
 int main() {
-    std::string name;
-    std::cout << "What is your name? ";
-    std::getline(std::cin, name);
-    std::cout << "Hello, " << name << "!" << std::endl;
+    std::cout << " _                 _        " << std::endl;
+    std::cout << "| |               (_)       " << std::endl;
+    std::cout << "| |    ___   __ _  _  _ __  " << std::endl;
+    std::cout << "| |   / _ \\\\ / _\` || || '_ \\\\ " << std::endl;
+    std::cout << "| |__| (_) | (_| || || | | |" << std::endl;
+    std::cout << "\\\\____/\\\\___/ \\\\__, ||_||_| |_|" << std::endl;
+    std::cout << "             __/ |          " << std::endl;
+    std::cout << "            |___/           " << std::endl;
     return 0;
 }`,
-    typescript: `// Try this example to test the input!
-const name: string | null = prompt("What is your name?");
-console.log("Hello, " + name + "!");`,
-    c: `// Try this example to test the input!
+    typescript: `// Welcome to Logix! Click Run to see the output.
+console.log(\`
+ _                 _        
+| |               (_)       
+| |    ___   __ _  _  _ __  
+| |   / _ \\ / _\` || || '_ \\ 
+| |__| (_) | (_| || || | | |
+\\____/\\___/ \\__, ||_||_| |_|
+             __/ |          
+            |___/           
+\`);`,
+    c: `// Welcome to Logix! Click Run to see the output.
 #include <stdio.h>
 
 int main() {
-   char name[50];
-   printf("What is your name? ");
-   fgets(name, 50, stdin);
-   printf("Hello, %s", name);
-   return 0;
+    printf(" _                 _        \\n");
+    printf("| |               (_)       \\n");
+    printf("| |    ___   __ _  _  _ __  \\n");
+    printf("| |   / _ \\\\ / _\` || || '_ \\\\ \\n");
+    printf("| |__| (_) | (_| || || | | |\\n");
+    printf("\\\\____/\\\\___/ \\\\__, ||_||_| |_|\\n");
+    printf("             __/ |          \\n");
+    printf("            |___/           \\n");
+    return 0;
 }`,
 };
 
