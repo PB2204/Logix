@@ -10,7 +10,13 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
+const MessageSchema = z.object({
+    role: z.enum(['user', 'bot']),
+    content: z.string(),
+});
+
 const QueryComputerScienceQuestionInputSchema = z.object({
+  history: z.array(MessageSchema).describe('The conversation history.'),
   query: z.string().describe('The computer science question to be answered.'),
 });
 export type QueryComputerScienceQuestionInput = z.infer<typeof QueryComputerScienceQuestionInputSchema>;
@@ -28,7 +34,16 @@ const prompt = ai.definePrompt({
   name: 'queryComputerScienceQuestionPrompt',
   input: {schema: QueryComputerScienceQuestionInputSchema},
   output: {schema: QueryComputerScienceQuestionOutputSchema},
-  prompt: `You are a highly knowledgeable AI chatbot specialized in computer science. Provide deeply explained answers with code examples to the following question:\n\nQuestion: {{{query}}}\n\nAnswer: `,
+  prompt: `You are a highly knowledgeable AI chatbot specialized in computer science. Provide deeply explained answers with code examples. Use Markdown for formatting.
+
+Here is the conversation history:
+{{#each history}}
+**{{role}}**: {{content}}
+{{/each}}
+
+New Question: {{{query}}}
+
+Answer: `,
 });
 
 const queryComputerScienceQuestionFlow = ai.defineFlow(

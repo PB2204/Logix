@@ -8,6 +8,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bot, Send, User, Loader, Copy, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { queryComputerScienceQuestion } from "@/ai/flows/query-computer-science-questions";
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import remarkGfm from 'remark-gfm';
+
 
 interface Message {
   id: number;
@@ -16,30 +21,43 @@ interface Message {
   isLoading?: boolean;
 }
 
-const CodeBlock = ({ language, code }: { language: string; code: string }) => {
+const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
     const [isCopied, setIsCopied] = useState(false);
-  
+    const match = /language-(\w+)/.exec(className || '');
+    const code = String(children).replace(/\n$/, '');
+
     const handleCopy = () => {
-      navigator.clipboard.writeText(code).then(() => {
-        setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 2000);
-      });
+        navigator.clipboard.writeText(code).then(() => {
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000);
+        });
     };
-  
-    return (
-      <div className="my-2 rounded-md bg-muted text-foreground">
-        <div className="flex items-center justify-between rounded-t-md bg-secondary px-4 py-2">
-          <span className="text-sm font-code text-muted-foreground">{language || 'code'}</span>
-          <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7">
-            {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
-          </Button>
+
+    return !inline && match ? (
+        <div className="my-2 rounded-md bg-secondary/50 text-foreground border border-border">
+            <div className="flex items-center justify-between rounded-t-md bg-secondary px-4 py-2">
+                <span className="text-sm font-code text-muted-foreground">{match[1]}</span>
+                <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7">
+                    {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+                </Button>
+            </div>
+            <SyntaxHighlighter
+                style={vscDarkPlus}
+                language={match[1]}
+                PreTag="div"
+                {...props}
+                className="!p-4 !m-0 !bg-transparent overflow-x-auto"
+            >
+                {code}
+            </SyntaxHighlighter>
         </div>
-        <pre className="overflow-x-auto p-4">
-          <code className="font-code text-sm">{code}</code>
-        </pre>
-      </div>
+    ) : (
+        <code className={cn("font-code bg-muted text-foreground px-1 py-0.5 rounded-sm", className)} {...props}>
+            {children}
+        </code>
     );
 };
+
 
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -74,9 +92,11 @@ export function ChatInterface() {
 
     setMessages((prev) => [...prev, userMessage, botLoadingMessage]);
     setInput("");
+    
+    const history = messages.filter(m => !m.isLoading).map(({id, isLoading, ...rest}) => rest);
 
     try {
-      const result = await queryComputerScienceQuestion({ query: input });
+      const result = await queryComputerScienceQuestion({ query: input, history });
       const botMessage: Message = {
         id: Date.now() + 1,
         role: "bot",
@@ -95,19 +115,17 @@ export function ChatInterface() {
   };
   
   const formatContent = (content: string) => {
-    const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g;
-    const parts = content.split(codeBlockRegex);
-    
-    return parts.map((part, index) => {
-        if (index % 3 === 2) { // This is the code part
-          const language = parts[index - 1] || '';
-          return <CodeBlock key={index} language={language} code={part.trim()} />;
-        }
-        if (index % 3 === 0 && part.trim()) { // This is regular text
-          return <p key={index} className="whitespace-pre-wrap">{part.trim()}</p>;
-        }
-        return null;
-    });
+    return (
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        className="prose prose-sm dark:prose-invert max-w-none prose-p:my-2 prose-headings:my-3 prose-ul:my-2"
+        components={{
+            code: CodeBlock,
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    );
   };
 
   return (
