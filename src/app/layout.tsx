@@ -1,7 +1,9 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/shared/Header';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Logix - AI-Powered Learning Companion',
@@ -27,6 +29,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Toaster />
+        <Script src="https://cdn.jsdelivr.net/npm/typescript@5.3.3/lib/typescript.min.js" />
       </body>
     </html>
   );

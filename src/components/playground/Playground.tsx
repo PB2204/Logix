@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -8,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Wand2, Play, Loader, Copy, Check, BarChart3, Clock, Scale } from "lucide-react";
 import { analyzeCode } from "@/ai/flows/code-analysis";
 import { analyzeCodeComplexity, type CodeComplexityAnalysisOutput } from "@/ai/flows/code-complexity-analysis";
+import { executeCode, CodeExecutionOutput } from "@/ai/flows/code-execution";
 import { CodeEditor } from "./CodeEditor";
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -86,10 +88,73 @@ const formatContent = (content: string) => {
     );
   };
 
+const runCode = (code: string): { logs: any[], error: string | null } => {
+    const logs: any[] = [];
+    let error: string | null = null;
+
+    const originalLog = console.log;
+    const originalError = console.error;
+    const originalWarn = console.warn;
+
+    console.log = (...args) => {
+        logs.push({type: 'log', data: args});
+    };
+    console.error = (...args) => {
+        logs.push({type: 'error', data: args});
+    };
+    console.warn = (...args) => {
+        logs.push({type: 'warn', data: args});
+    };
+
+    try {
+        const result = new Function(code)();
+        if (result !== undefined) {
+          logs.push({type: 'return', data: [result]});
+        }
+    } catch (e: any) {
+        error = e.toString();
+        logs.push({type: 'error', data: [e.message]});
+    } finally {
+        console.log = originalLog;
+        console.error = originalError;
+        console.warn = originalWarn;
+    }
+
+    return { logs, error };
+}
+
+const formatLog = (log: {type: string, data: any[]}) => {
+    const formattedData = log.data.map(item => {
+        if (typeof item === 'object' && item !== null) {
+            try {
+                return JSON.stringify(item, null, 2);
+            } catch {
+                return '[unserializable object]';
+            }
+        }
+        return String(item);
+    }).join(' ');
+
+    const prefix = log.type.charAt(0).toUpperCase() + log.type.slice(1);
+    const color = {
+      log: 'text-white',
+      error: 'text-red-500',
+      warn: 'text-yellow-500',
+      return: 'text-blue-400',
+    }[log.type] || 'text-white';
+    
+    return <div className={cn('flex items-start', color)}>
+        <span className="w-20 font-bold opacity-70">[{prefix}]</span>
+        <pre className="whitespace-pre-wrap flex-1">{formattedData}</pre>
+    </div>;
+}
+
+
 export function Playground() {
   const [language, setLanguage] = useState(languages[0].value);
   const [code, setCode] = useState(placeholders[languages[0].value]);
-  const [output, setOutput] = useState("");
+  const [output, setOutput] = useState<CodeExecutionOutput | null>(null);
+  const [clientOutput, setClientOutput] = useState<{logs: any[], error: string | null} | null>(null);
   const [analysis, setAnalysis] = useState("");
   const [complexity, setComplexity] = useState<CodeComplexityAnalysisOutput | null>(null);
   const [activeTab, setActiveTab] = useState("output");
@@ -99,7 +164,8 @@ export function Playground() {
   const handleLanguageChange = (value: string) => {
     setLanguage(value);
     setCode(placeholders[value] || "");
-    setOutput("");
+    setOutput(null);
+    setClientOutput(null);
     setAnalysis("");
     setComplexity(null);
   };
@@ -126,15 +192,27 @@ export function Playground() {
     }
   };
 
-  const handleExecute = () => {
-    setIsExecuting(true);
-    setActiveTab("output");
-    // Mock execution
-    setTimeout(() => {
-        setOutput(`Executing ${language} code...\n> Hello, Logix!`);
+    const handleExecute = async () => {
+        setIsExecuting(true);
+        setActiveTab("output");
+        setOutput(null);
+        setClientOutput(null);
+
+        if (language === 'javascript' || language === 'typescript') {
+            const result = runCode(language === 'typescript' ? (window as any).ts.transpile(code) : code);
+            setClientOutput(result);
+        } else {
+            try {
+                const result = await executeCode({ code, language });
+                setOutput(result);
+            } catch (error) {
+                console.error("Execution failed:", error);
+                setOutput({ output: '', error: 'An unexpected error occurred during execution.' });
+            }
+        }
+
         setIsExecuting(false);
-    }, 1000)
-  };
+    };
   
   const displayLanguage = languages.find(l => l.value === language)?.value || 'javascript';
 
@@ -190,12 +268,24 @@ export function Playground() {
           </TabsList>
           <TabsContent value="output" className="flex-1 min-h-0">
             <Card className="h-full bg-gradient-card">
-              <CardContent className="p-0 h-full">
-                <pre className="p-4 bg-transparent h-full w-full overflow-auto rounded-md font-code text-sm">
-                    {isExecuting && <div className="flex items-center gap-2"><Loader className="h-4 w-4 animate-spin" /><span>Executing...</span></div>}
-                    {!isExecuting && (output || "Code output will appear here.")}
-                </pre>
-              </CardContent>
+                <CardContent className="p-0 h-full">
+                    <div className="p-4 bg-transparent h-full w-full overflow-auto rounded-md font-code text-sm">
+                        {isExecuting && <div className="flex items-center gap-2"><Loader className="h-4 w-4 animate-spin" /><span>Executing...</span></div>}
+                        {!isExecuting && !output && !clientOutput && "Code output will appear here."}
+                        {!isExecuting && clientOutput && (
+                            <div className="space-y-1">
+                                {clientOutput.logs.map((log, i) => <div key={i}>{formatLog(log)}</div>)}
+                                {clientOutput.error && <div className="text-red-500 mt-2"><strong>Error:</strong> {clientOutput.error}</div>}
+                            </div>
+                        )}
+                        {!isExecuting && output && (
+                            <>
+                                {output.output && <pre>{output.output}</pre>}
+                                {output.error && <pre className="text-red-500 mt-2">{output.error}</pre>}
+                            </>
+                        )}
+                    </div>
+                </CardContent>
             </Card>
           </TabsContent>
           <TabsContent value="analysis" className="flex-1 min-h-0">
