@@ -78,10 +78,22 @@ export default {
             height: '0',
           },
         },
+        'glow': {
+          '0%, 100%': { textShadow: '0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary))' },
+          '50%': { textShadow: '0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary)), 0 0 30px hsl(var(--primary))' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'glow': 'glow 3s ease-in-out infinite',
+      },
+      backgroundImage: {
+        'grid-pattern': `linear-gradient(to right, hsl(var(--border) / 0.1) 1px, transparent 1px),
+                         linear-gradient(to bottom, hsl(var(--border) / 0.1) 1px, transparent 1px)`,
+      },
+      backgroundSize: {
+        'grid-pattern': '40px 40px',
       },
     },
   },

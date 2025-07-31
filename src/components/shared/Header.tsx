@@ -11,9 +11,9 @@ export default function Header() {
   ];
 
   return (
-    <header className="py-3 px-4 md:px-8 bg-card/80 backdrop-blur-sm sticky top-0 z-50 border-b">
+    <header className="py-3 px-4 md:px-8 bg-background/80 backdrop-blur-sm sticky top-0 z-50 border-b border-border/50">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-2 text-primary">
+        <Link href="/" className="flex items-center gap-2 text-primary hover:brightness-125 transition-all">
           <BrainCircuit className="h-7 w-7" />
           <span className="text-2xl font-bold font-headline">Logix</span>
         </Link>
