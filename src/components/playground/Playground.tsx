@@ -267,7 +267,7 @@ const formatLog = (log: {type: string, data: any[]}) => {
     
     return <div className={cn('flex items-start', color)}>
         {showPrefix && <span className="w-20 font-bold opacity-70">[{prefix}]</span>}
-        <pre className={cn("whitespace-pre-wrap flex-1", !showPrefix && "pl-20")}>{formattedData}</pre>
+        <pre className={cn("whitespace-pre flex-1", !showPrefix && "pl-20")}>{formattedData}</pre>
     </div>;
 }
 
@@ -407,8 +407,8 @@ export function Playground() {
                         )}
                         {!isExecuting && output && (
                             <>
-                                {output.output && <pre className="whitespace-pre-wrap">{output.output}</pre>}
-                                {output.error && <pre className="text-red-500 mt-2 whitespace-pre-wrap">{output.error}</pre>}
+                                {output.output && <pre className="whitespace-pre">{output.output}</pre>}
+                                {output.error && <pre className="text-red-500 mt-2 whitespace-pre">{output.error}</pre>}
                             </>
                         )}
                     </div>
@@ -486,3 +486,5 @@ export function Playground() {
     </div>
   );
 }
+
+    
