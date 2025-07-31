@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Bot, Send, User, Loader } from "lucide-react";
+import { Bot, Send, User, Loader, Copy, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { queryComputerScienceQuestion } from "@/ai/flows/query-computer-science-questions";
 
@@ -15,6 +15,31 @@ interface Message {
   content: string;
   isLoading?: boolean;
 }
+
+const CodeBlock = ({ language, code }: { language: string; code: string }) => {
+    const [isCopied, setIsCopied] = useState(false);
+  
+    const handleCopy = () => {
+      navigator.clipboard.writeText(code).then(() => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      });
+    };
+  
+    return (
+      <div className="my-2 rounded-md bg-muted text-foreground">
+        <div className="flex items-center justify-between rounded-t-md bg-secondary px-4 py-2">
+          <span className="text-sm font-code text-muted-foreground">{language || 'code'}</span>
+          <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7">
+            {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+          </Button>
+        </div>
+        <pre className="overflow-x-auto p-4">
+          <code className="font-code text-sm">{code}</code>
+        </pre>
+      </div>
+    );
+};
 
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -70,17 +95,18 @@ export function ChatInterface() {
   };
   
   const formatContent = (content: string) => {
-    const codeBlockRegex = /```([\s\S]*?)```/g;
-    return content.split(codeBlockRegex).map((part, index) => {
-      if (index % 2 === 1) {
-        // This is a code block
-        return (
-          <pre key={index} className="bg-muted p-4 rounded-md my-2 overflow-x-auto">
-            <code className="font-code text-sm">{part.trim()}</code>
-          </pre>
-        );
-      }
-      return <span key={index}>{part}</span>;
+    const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g;
+    const parts = content.split(codeBlockRegex);
+    
+    return parts.map((part, index) => {
+        if (index % 3 === 2) { // This is the code part
+          const language = parts[index - 1] || '';
+          return <CodeBlock key={index} language={language} code={part.trim()} />;
+        }
+        if (index % 3 === 0 && part.trim()) { // This is regular text
+          return <p key={index} className="whitespace-pre-wrap">{part.trim()}</p>;
+        }
+        return null;
     });
   };
 
@@ -114,7 +140,7 @@ export function ChatInterface() {
                   "max-w-xs md:max-w-md lg:max-w-2xl rounded-lg p-3 text-sm",
                   message.role === "user"
                     ? "bg-primary text-primary-foreground"
-                    : "bg-muted"
+                    : "bg-card text-card-foreground border"
                 )}
               >
                 {message.isLoading ? (
