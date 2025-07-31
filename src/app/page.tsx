@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { CheckCircle, CodeXml, Bot, BookOpenCheck, ArrowRight } from 'lucide-react';
+import { CheckCircle, CodeXml, Bot, BookOpenCheck, ArrowRight, BrainCircuit, Lightbulb, GraduationCap, Bug } from 'lucide-react';
 import Link from 'next/link';
 
 const HeroSection = () => (
@@ -116,29 +115,37 @@ const HowItWorksSection = () => {
     );
 }
 
-const TestimonialsSection = () => {
-    const testimonials = [
-        { name: 'Alex Johnson', role: 'CS Student', text: 'Logix\'s AI chatbot is a lifesaver for my DSA course. The explanations are clearer than my textbook!', avatar: 'https://placehold.co/100x100.png', hint: 'man portrait' },
-        { name: 'Samantha Lee', role: 'Aspiring Developer', text: 'The code playground is fantastic. Getting instant analysis on my code has accelerated my learning curve.', avatar: 'https://placehold.co/100x100.png', hint: 'woman smiling' },
-        { name: 'David Chen', role: 'University Freshman', text: 'Having all my study materials organized by semester is incredibly helpful. I can finally focus on learning.', avatar: 'https://placehold.co/100x100.png', hint: 'student glasses' }
+const UseCasesSection = () => {
+    const useCases = [
+        {
+            icon: <GraduationCap className="w-10 h-10 text-accent" />,
+            title: 'Ace Your Exams',
+            description: 'Use the AI chatbot to get detailed explanations of complex topics and practice with relevant questions. Organize your notes with our study materials.',
+        },
+        {
+            icon: <BrainCircuit className="w-10 h-10 text-accent" />,
+            title: 'Prepare for Interviews',
+            description: 'Sharpen your coding skills in the playground. Analyze time and space complexity to write optimal solutions for technical interviews.',
+        },
+        {
+            icon: <Bug className="w-10 h-10 text-accent" />,
+            title: 'Debug Projects Faster',
+            description: "Don't get stuck on a bug for hours. Get AI-powered suggestions to find and fix errors in your code quickly and efficiently.",
+        }
     ];
     return (
         <section className="w-full py-16 md:py-24 bg-background/70 backdrop-blur-sm">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl font-headline font-bold">Loved by Students Like You</h2>
-                    <p className="text-muted-foreground mt-2">Don't just take our word for it. Here's what our users are saying.</p>
+                    <h2 className="text-4xl font-headline font-bold">Supercharge Your Workflow</h2>
+                    <p className="text-muted-foreground mt-2">Logix is your secret weapon for any CS challenge.</p>
                 </div>
                 <div className="grid gap-8 md:grid-cols-3">
-                    {testimonials.map((t) => (
-                        <Card key={t.name} className="bg-gradient-card border-border/50 p-6 flex flex-col items-center text-center">
-                            <Avatar className="w-20 h-20 mb-4 border-4 border-accent">
-                                <AvatarImage src={t.avatar} alt={t.name} data-ai-hint={t.hint} />
-                                <AvatarFallback>{t.name.charAt(0)}</AvatarFallback>
-                            </Avatar>
-                            <p className="text-lg italic text-foreground/90">"{t.text}"</p>
-                            <p className="mt-4 font-bold text-lg">{t.name}</p>
-                            <p className="text-sm text-muted-foreground">{t.role}</p>
+                    {useCases.map((uc) => (
+                        <Card key={uc.title} className="bg-gradient-card border-border/50 p-6 text-left">
+                            <div className="mb-4">{uc.icon}</div>
+                            <h3 className="text-2xl font-bold font-headline mb-2">{uc.title}</h3>
+                            <p className="text-muted-foreground">{uc.description}</p>
                         </Card>
                     ))}
                 </div>
@@ -146,6 +153,7 @@ const TestimonialsSection = () => {
         </section>
     );
 };
+
 
 const BenefitsSection = () => {
     const benefits = [
@@ -200,7 +208,7 @@ export default function Home() {
       <HeroSection />
       <FeaturesSection />
       <HowItWorksSection />
-      <TestimonialsSection />
+      <UseCasesSection />
       <BenefitsSection />
       <CtaSection />
       <Footer />
