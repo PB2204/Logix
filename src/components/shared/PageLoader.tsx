@@ -3,9 +3,19 @@
 
 import { useLoader } from "@/context/LoaderContext";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 export default function PageLoader() {
   const { isLoading } = useLoader();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div
