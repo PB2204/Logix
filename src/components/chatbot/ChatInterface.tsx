@@ -35,8 +35,8 @@ const CodeBlock = ({ language, code }: { language: string | undefined, code: str
 
     return (
         <div className="my-2 rounded-md bg-black text-white border border-border">
-            <div className="flex items-center justify-between rounded-t-md bg-gray-800 px-2 md:px-4 py-2">
-                <span className="text-sm font-code text-gray-400">{language || 'code'}</span>
+            <div className="flex items-center justify-between rounded-t-md bg-gray-800 px-3 py-1.5 md:px-4 md:py-2">
+                <span className="text-xs md:text-sm font-code text-gray-400">{language || 'code'}</span>
                 <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7 text-white hover:bg-gray-700 shrink-0">
                     {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
                 </Button>
@@ -46,7 +46,7 @@ const CodeBlock = ({ language, code }: { language: string | undefined, code: str
                     style={coldarkDark}
                     language={language}
                     PreTag="div"
-                    className="!p-4 !m-0 !bg-transparent text-xs"
+                    className="!p-3 md:!p-4 !m-0 !bg-transparent text-xs"
                 >
                     {code}
                 </SyntaxHighlighter>
@@ -62,7 +62,6 @@ const parseBotResponse = (response: string): Omit<Message, 'id' | 'role' | 'isLo
     let match;
 
     while ((match = codeBlockRegex.exec(response)) !== null) {
-        // Add text part before the code block
         if (match.index > lastIndex) {
             const textContent = response.substring(lastIndex, match.index).trim();
             if (textContent) {
@@ -70,7 +69,6 @@ const parseBotResponse = (response: string): Omit<Message, 'id' | 'role' | 'isLo
             }
         }
 
-        // Add code block
         const language = match[1] || 'bash';
         const codeContent = match[2].trim();
         chunks.push({ type: 'code' as const, content: codeContent, language });
@@ -78,7 +76,6 @@ const parseBotResponse = (response: string): Omit<Message, 'id' | 'role' | 'isLo
         lastIndex = match.index + match[0].length;
     }
 
-    // Add any remaining text after the last code block
     if (lastIndex < response.length) {
         const textContent = response.substring(lastIndex).trim();
         if (textContent) {
@@ -86,7 +83,6 @@ const parseBotResponse = (response: string): Omit<Message, 'id' | 'role' | 'isLo
         }
     }
     
-    // If no code blocks are found, return the whole response as a single text chunk
     if (chunks.length === 0 && response.trim()) {
         chunks.push({ type: 'text' as const, content: response });
     }
