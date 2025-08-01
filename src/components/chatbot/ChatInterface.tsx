@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -41,17 +42,19 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
                     {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
                 </Button>
             </div>
-            <div className="overflow-x-auto">
-                <SyntaxHighlighter
-                    style={coldarkDark}
-                    language={match[1]}
-                    PreTag="div"
-                    {...props}
-                    className="!p-4 !m-0 !bg-transparent text-xs"
-                >
-                    {code}
-                </SyntaxHighlighter>
-            </div>
+            <SyntaxHighlighter
+                style={coldarkDark}
+                language={match[1]}
+                PreTag="div"
+                {...props}
+                className="!p-4 !m-0 !bg-transparent text-xs"
+                customStyle={{
+                    whiteSpace: 'pre-wrap',
+                    wordBreak: 'break-all',
+                }}
+            >
+                {code}
+            </SyntaxHighlighter>
         </div>
     ) : (
         <code className={cn("font-code bg-muted text-foreground px-1 py-0.5 rounded-sm", className)} {...props}>
