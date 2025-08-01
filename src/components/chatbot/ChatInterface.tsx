@@ -181,8 +181,8 @@ export function ChatInterface() {
               )}
               <div
                 className={cn(
-                  "rounded-lg text-sm max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl min-w-0",
-                  message.type === 'code' && "w-full max-w-[220px] sm:max-w-xs",
+                  "rounded-lg text-sm min-w-0",
+                  "max-w-[220px] sm:max-w-md md:max-w-lg lg:max-w-2xl",
                   message.type === 'text' && "p-3",
                   message.role === "user"
                     ? "bg-gradient-accent text-white"
