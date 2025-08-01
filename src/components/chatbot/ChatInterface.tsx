@@ -35,9 +35,9 @@ const CodeBlock = ({ language, code }: { language: string | undefined, code: str
 
     return (
         <div className="my-2 rounded-md bg-black text-white border border-border">
-            <div className="flex items-center justify-between rounded-t-md bg-gray-800 px-4 py-2">
+            <div className="flex items-center justify-between rounded-t-md bg-gray-800 px-2 md:px-4 py-2">
                 <span className="text-sm font-code text-gray-400">{language || 'code'}</span>
-                <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7 text-white hover:bg-gray-700">
+                <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7 text-white hover:bg-gray-700 shrink-0">
                     {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
                 </Button>
             </div>
@@ -84,6 +84,11 @@ const parseBotResponse = (response: string): Omit<Message, 'id' | 'role' | 'isLo
         if (textContent) {
             chunks.push({ type: 'text' as const, content: textContent });
         }
+    }
+    
+    // If no code blocks are found, return the whole response as a single text chunk
+    if (chunks.length === 0 && response.trim()) {
+        chunks.push({ type: 'text' as const, content: response });
     }
 
     return chunks;
@@ -188,7 +193,7 @@ export function ChatInterface() {
                 )}
               >
                 {message.isLoading ? (
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 p-3">
                         <Loader className="h-4 w-4 animate-spin"/>
                         <span>Thinking...</span>
                     </div>
