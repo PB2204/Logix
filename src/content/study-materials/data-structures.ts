@@ -128,4 +128,3 @@ console.log(wordCounts); // { hello: 2, world: 1 }
     ]
   }
 };
-`

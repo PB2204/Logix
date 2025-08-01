@@ -103,4 +103,3 @@ The arrangement of the elements (links, nodes, etc.) of a communication network.
     ]
   }
 };
-`

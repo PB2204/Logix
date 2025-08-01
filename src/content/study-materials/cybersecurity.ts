@@ -108,4 +108,3 @@ Since \`'1'='1'\` is always true, the condition might pass, and the attacker cou
     ]
   }
 };
-`

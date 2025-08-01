@@ -118,4 +118,3 @@ The compilation process is typically broken down into several distinct phases.
     ]
   }
 };
-`
