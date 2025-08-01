@@ -12,7 +12,7 @@ const HeroSection = () => (
       <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl bg-gradient-primary bg-clip-text text-transparent">
         Logix : Learn Logically
       </h1>
-      <p className="mt-6 text-lg md:text-xl text-muted-foreground">
+      <p className="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-foreground/80">
         Your AI-Powered Learning Companion for Computer Science. Master complex topics, debug code with ease, and access all your study materials in one place.
       </p>
       <div className="mt-10 flex justify-center gap-4">
