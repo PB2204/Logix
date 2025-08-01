@@ -47,11 +47,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
                 language={match[1]}
                 PreTag="div"
                 {...props}
-                className="!p-4 !m-0 !bg-transparent text-xs"
-                customStyle={{
-                    whiteSpace: 'pre-wrap',
-                    wordBreak: 'break-all',
-                }}
+                className="!p-4 !m-0 !bg-transparent overflow-x-auto text-xs"
             >
                 {code}
             </SyntaxHighlighter>
