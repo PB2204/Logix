@@ -28,6 +28,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon, Eye, EyeOff } from "lucide-react";
 import React from "react";
+import { studyTopics } from "@/content/study-materials";
 
 const strongPasswordRegex = new RegExp(
   "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
@@ -42,10 +43,11 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address."),
   password: z.string().regex(strongPasswordRegex, "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."),
   confirmPassword: z.string(),
+  profession: z.string({ required_error: "Please select a profession." }),
   organization: z.string().regex(orgRegex, "Please enter a valid organization/college name."),
   department: z.string().regex(orgRegex, "Please enter a valid department name."),
-  profession: z.string({ required_error: "Please select a profession." }),
   semester: z.string().optional(),
+  areaOfInterest: z.string().optional(),
   dob: z.date({ required_error: "A date of birth is required." }),
   phone: z.string().regex(phoneRegex, "Please enter a valid phone number."),
 }).refine((data) => data.password === data.confirmPassword, {
@@ -121,29 +123,30 @@ export function SignupForm() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField control={form.control} name="organization" render={({ field }) => ( <FormItem><FormLabel>Organization / College</FormLabel><FormControl><Input placeholder="e.g., State University" {...field} /></FormControl><FormMessage /></FormItem>)} />
-            <FormField control={form.control} name="department" render={({ field }) => ( <FormItem><FormLabel>Department</FormLabel><FormControl><Input placeholder="e.g., Computer Science" {...field} /></FormControl><FormMessage /></FormItem>)} />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField control={form.control} name="profession" render={({ field }) => (
+            <FormField
+              control={form.control}
+              name="profession"
+              render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Profession</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                            <SelectTrigger><SelectValue placeholder="Select your profession" /></SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                            <SelectItem value="student">Student</SelectItem>
-                            <SelectItem value="professional">Working Professional</SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <FormMessage />
+                  <FormLabel>Profession</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger><SelectValue placeholder="Select your profession" /></SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                        <SelectItem value="student">Student</SelectItem>
+                        <SelectItem value="professional">Working Professional</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
                 </FormItem>
             )} />
             {profession === "student" && (
-                <FormField control={form.control} name="semester" render={({ field }) => (
+                <FormField
+                  control={form.control}
+                  name="semester"
+                  render={({ field }) => (
                     <FormItem>
                         <FormLabel>Semester</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -159,53 +162,90 @@ export function SignupForm() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="dob"
-            render={({ field }) => (
-              <FormItem className="flex flex-col pt-2">
-                <FormLabel>Date of birth</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      captionLayout="dropdown-buttons"
-                      fromYear={1900}
-                      toYear={new Date().getFullYear()}
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField control={form.control} name="phone" render={({ field }) => ( <FormItem><FormLabel>Phone/WhatsApp Number</FormLabel><FormControl><Input placeholder="+1 123 456 7890" {...field} /></FormControl><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="organization" render={({ field }) => ( <FormItem><FormLabel>Organization / College</FormLabel><FormControl><Input placeholder="e.g., State University" {...field} /></FormControl><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="department" render={({ field }) => ( <FormItem><FormLabel>Department</FormLabel><FormControl><Input placeholder="e.g., Computer Science" {...field} /></FormControl><FormMessage /></FormItem>)} />
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="areaOfInterest"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Area of Interest / Specialization</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger><SelectValue placeholder="Select a subject" /></SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                        {studyTopics.map(topic => (
+                           <SelectItem key={topic.slug} value={topic.slug}>{topic.title}</SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+            )} />
+           <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Phone/WhatsApp Number</FormLabel>
+                    <FormControl>
+                        <Input placeholder="+1 123 456 7890" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+            )}
+            />
+        </div>
+        
+        <FormField
+          control={form.control}
+          name="dob"
+          render={({ field }) => (
+            <FormItem className="flex flex-col pt-2">
+              <FormLabel>Date of birth</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    captionLayout="dropdown-buttons"
+                    fromYear={1960}
+                    toYear={new Date().getFullYear() - 10}
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
         <Button type="submit" className="w-full !mt-8" variant="accent">
           Create Account
         </Button>
@@ -213,3 +253,4 @@ export function SignupForm() {
     </Form>
   );
 }
+
