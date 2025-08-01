@@ -9,6 +9,7 @@ import { AnimatedShapes } from '@/components/shared/AnimatedShapes';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import React from 'react';
+import { BackgroundGlow } from '@/components/shared/BackgroundGlow';
 
 const HeroSection = () => (
   <section className="w-full py-20 md:py-32 lg:py-40 relative overflow-hidden bg-grid-pattern bg-repeat bg-grid-pattern">
@@ -65,7 +66,7 @@ const FeaturesSection = () => {
     ];
 
     return (
-        <section className="w-full py-16 md:py-24 bg-background/70 backdrop-blur-sm">
+        <section className="w-full py-16 md:py-24 bg-background/70 backdrop-blur-sm relative z-10">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-headline font-bold">All-in-One Tools to Learn Smarter</h2>
@@ -116,11 +117,11 @@ const PopularTopicsSection = () => {
 
         // Advanced
         { name: "Machine Learning", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v-2a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v2"/></svg> },
-        { name: "Artificial Intelligence", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19h-11a1 1 0 0 1-1-1v-12a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1zM8 12h8m-4-4v8"></path></svg> },
+        { name: "Artificial Intelligence", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19h-11a1 1 0 0 1-1-1v-12a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v12a1 1 0 0 1-1-1zM8 12h8m-4-4v8"></path></svg> },
         { name: "Blockchain", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 9.5a8.5 8.5 0 1 1-11.2-7.5"></path><path d="M9 10a5.5 5.5 0 1 1 7.8 0"></path><path d="M12 12a3 3 0 1 1 3-3"></path></svg> },
     ];
     return (
-        <section className="w-full py-16 md:py-24">
+        <section className="w-full py-16 md:py-24 relative z-10">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-headline font-bold">Explore Popular Topics</h2>
@@ -146,7 +147,7 @@ const HowItWorksSection = () => {
         { title: 'Start Mastering', description: 'Execute code, get expert answers, and conquer new concepts instantly.' }
     ];
     return (
-        <section className="w-full py-16 md:py-24">
+        <section className="w-full py-16 md:py-24 relative z-10">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-headline font-bold">Get Started in Seconds</h2>
@@ -205,7 +206,7 @@ const UseCasesSection = () => {
         },
     ];
     return (
-        <section className="w-full py-16 md:py-24 bg-background/70 backdrop-blur-sm">
+        <section className="w-full py-16 md:py-24 bg-background/70 backdrop-blur-sm relative z-10">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-headline font-bold">Supercharge Your Workflow</h2>
@@ -249,7 +250,7 @@ const TestimonialsSection = () => {
     );
 
     return (
-        <section className="w-full py-16 md:py-24">
+        <section className="w-full py-16 md:py-24 relative z-10">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-headline font-bold">Loved by Students Everywhere</h2>
@@ -298,7 +299,7 @@ const BenefitsSection = () => {
         'Interview Preparation', 'Project Building'
     ];
     return (
-        <section className="w-full py-16 md:py-24">
+        <section className="w-full py-16 md:py-24 relative z-10">
             <div className="container mx-auto px-4 md:px-6 text-center">
                 <h2 className="text-4xl font-headline font-bold mb-10">Unlock Your Full Potential</h2>
                 <div className="flex flex-wrap justify-center gap-4">
@@ -315,7 +316,7 @@ const BenefitsSection = () => {
 };
 
 const CtaSection = () => (
-    <section className="w-full py-16 md:py-24">
+    <section className="w-full py-16 md:py-24 relative z-10">
       <div className="container mx-auto px-4 md:px-6">
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-accent to-primary p-10 md:p-16 text-center shadow-2xl">
           <div className="absolute inset-0 bg-grid-pattern bg-repeat opacity-10"></div>
@@ -345,7 +346,7 @@ const CtaSection = () => (
   );
 
 const Footer = () => (
-    <footer className="w-full py-6 border-t border-border/50">
+    <footer className="w-full py-6 border-t border-border/50 relative z-10">
         <div className="container mx-auto text-center text-muted-foreground text-sm">
             <p>&copy; {new Date().getFullYear()} Logix. All Rights Reserved.</p>
             <p className="flex items-center justify-center gap-1 mt-1">
@@ -363,7 +364,8 @@ const Footer = () => (
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center bg-background">
+    <div className="flex flex-col items-center justify-center bg-background relative">
+      <BackgroundGlow />
       <HeroSection />
       <FeaturesSection />
       <PopularTopicsSection />
