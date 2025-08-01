@@ -127,4 +127,3 @@ Instead of joining tables, a document database might store the user and their po
     ]
   }
 };
-`
