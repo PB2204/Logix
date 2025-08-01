@@ -302,7 +302,7 @@ const BenefitsSection = () => {
                 <h2 className="text-4xl font-headline font-bold mb-10">Unlock Your Full Potential</h2>
                 <div className="flex flex-wrap justify-center gap-4">
                     {benefits.map(benefit => (
-                        <div key={benefit} className="flex items-center gap-2 bg-gradient-card border border-border/50 rounded-full px-5 py-3 text-lg">
+                        <div key={benefit} className="flex items-center gap-2 bg-gradient-card border border-border/50 rounded-full px-5 py-3 text-lg transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1">
                             <Check className="w-6 h-6 text-green-500" />
                             <span>{benefit}</span>
                         </div>
