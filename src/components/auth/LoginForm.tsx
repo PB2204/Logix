@@ -60,7 +60,7 @@ export function LoginForm() {
             <FormItem>
                 <div className="flex justify-between items-center">
                     <FormLabel>Password</FormLabel>
-                    <Link href="#" className="text-sm text-muted-foreground hover:text-accent transition">
+                    <Link href="/forgot-password" className="text-sm text-muted-foreground hover:text-accent transition">
                         Forgot Password?
                     </Link>
                 </div>
@@ -68,7 +68,7 @@ export function LoginForm() {
                 <div className="relative">
                     <Input type={showPassword ? 'text' : 'password'} placeholder="••••••••" {...field} />
                     <Button type="button" variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground hover:text-foreground" onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <EyeOff /> : <Eye />}
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </Button>
                 </div>
               </FormControl>
