@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -131,7 +131,7 @@ export function SignupForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Semester</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select semester" />
@@ -187,16 +187,16 @@ export function SignupForm() {
                 <FormItem>
                 <FormLabel>Profession</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
+                  <FormControl>
                     <SelectTrigger>
                         <SelectValue placeholder="Select your profession" />
                     </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
+                  </FormControl>
+                  <SelectContent>
                     <SelectItem value="student">Student</SelectItem>
                     <SelectItem value="professional">Working Professional</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
+                  </SelectContent>
                 </Select>
                 <FormMessage />
                 </FormItem>
@@ -215,14 +215,14 @@ export function SignupForm() {
                 <FormItem>
                     <FormLabel>Country</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                        <SelectTrigger>
-                        <SelectValue placeholder="Select country" />
-                        </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                        {countries.map(c => <SelectItem key={c.isoCode} value={c.isoCode}>{c.name}</SelectItem>)}
-                    </SelectContent>
+                      <FormControl>
+                          <SelectTrigger>
+                          <SelectValue placeholder="Select country" />
+                          </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                          {countries.map(c => <SelectItem key={c.isoCode} value={c.isoCode}>{c.name}</SelectItem>)}
+                      </SelectContent>
                     </Select>
                     <FormMessage />
                 </FormItem>
@@ -235,14 +235,14 @@ export function SignupForm() {
                 <FormItem>
                     <FormLabel>State</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value} disabled={!countryCode}>
-                    <FormControl>
-                        <SelectTrigger>
-                        <SelectValue placeholder="Select state" />
-                        </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                        {states.map(s => <SelectItem key={s.isoCode} value={s.isoCode}>{s.name}</SelectItem>)}
-                    </SelectContent>
+                      <FormControl>
+                          <SelectTrigger>
+                          <SelectValue placeholder="Select state" />
+                          </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                          {states.map(s => <SelectItem key={s.isoCode} value={s.isoCode}>{s.name}</SelectItem>)}
+                      </SelectContent>
                     </Select>
                     <FormMessage />
                 </FormItem>
@@ -255,14 +255,14 @@ export function SignupForm() {
                 <FormItem>
                     <FormLabel>District/City</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value} disabled={!stateCode}>
-                    <FormControl>
-                        <SelectTrigger>
-                        <SelectValue placeholder="Select district/city" />
-                        </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                        {cities.map(c => <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>)}
-                    </SelectContent>
+                      <FormControl>
+                          <SelectTrigger>
+                          <SelectValue placeholder="Select district/city" />
+                          </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                          {cities.map(c => <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>)}
+                      </SelectContent>
                     </Select>
                     <FormMessage />
                 </FormItem>
