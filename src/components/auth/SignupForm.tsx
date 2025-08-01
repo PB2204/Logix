@@ -125,7 +125,30 @@ export function SignupForm() {
           <>
             <FormField control={form.control} name="collegeName" render={({ field }) => ( <FormItem> <FormLabel>College Name</FormLabel> <FormControl> <Input placeholder="University of Technology" {...field} /> </FormControl> <FormMessage /> </FormItem> )} />
             <FormField control={form.control} name="studentDepartment" render={({ field }) => ( <FormItem> <FormLabel>Department</FormLabel> <FormControl> <Input placeholder="Computer Science" {...field} /> </FormControl> <FormMessage /> </FormItem> )} />
-            <FormField control={form.control} name="semester" render={({ field }) => ( <FormItem> <FormLabel>Semester</FormLabel> <Select onValueChange={field.onChange} defaultValue={field.value}> <FormControl> <SelectTrigger> <SelectValue placeholder="Select semester" /> </SelectTrigger> </FormControl> <SelectContent> {[...Array(8)].map((_, i) => ( <SelectItem key={i + 1} value={`${i + 1}`}> Semester {i + 1} </SelectItem> ))} </SelectContent> </Select> <FormMessage /> </FormItem> )} />
+            <FormField
+              control={form.control}
+              name="semester"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Semester</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select semester" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {[...Array(8)].map((_, i) => (
+                        <SelectItem key={i + 1} value={`${i + 1}`}>
+                          Semester {i + 1}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </>
         );
       case "professional":
@@ -157,16 +180,94 @@ export function SignupForm() {
           <FormField control={form.control} name="email" render={({ field }) => ( <FormItem> <FormLabel>Email</FormLabel> <FormControl> <Input placeholder="you@example.com" {...field} /> </FormControl> <FormMessage /> </FormItem> )} />
         </div>
 
-        <FormField control={form.control} name="profession" render={({ field }) => ( <FormItem> <FormLabel>Profession</FormLabel> <Select onValueChange={field.onChange} defaultValue={field.value}> <FormControl> <SelectTrigger> <SelectValue placeholder="Select your profession" /> </SelectTrigger> </FormControl> <SelectContent> <SelectItem value="student">Student</SelectItem> <SelectItem value="professional">Working Professional</SelectItem> <SelectItem value="other">Other</SelectItem> </SelectContent> </Select> <FormMessage /> </FormItem> )} />
+        <FormField
+            control={form.control}
+            name="profession"
+            render={({ field }) => (
+                <FormItem>
+                <FormLabel>Profession</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select your profession" />
+                    </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                    <SelectItem value="student">Student</SelectItem>
+                    <SelectItem value="professional">Working Professional</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                </Select>
+                <FormMessage />
+                </FormItem>
+            )}
+        />
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {renderProfessionFields()}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <FormField control={form.control} name="country" render={({ field }) => ( <FormItem> <FormLabel>Country</FormLabel> <Select onValueChange={field.onChange} value={field.value}> <FormControl> <SelectTrigger> <SelectValue placeholder="Select country" /> </SelectTrigger> </FormControl> <SelectContent> {countries.map(c => <SelectItem key={c.isoCode} value={c.isoCode}>{c.name}</SelectItem>)} </SelectContent> </Select> <FormMessage /> </FormItem> )} />
-          <FormField control={form.control} name="state" render={({ field }) => ( <FormItem> <FormLabel>State</FormLabel> <Select onValueChange={field.onChange} value={field.value} disabled={!countryCode}> <FormControl> <SelectTrigger> <SelectValue placeholder="Select state" /> </SelectTrigger> </FormControl> <SelectContent> {states.map(s => <SelectItem key={s.isoCode} value={s.isoCode}>{s.name}</SelectItem>)} </SelectContent> </Select> <FormMessage /> </FormItem> )} />
-          <FormField control={form.control} name="district" render={({ field }) => ( <FormItem> <FormLabel>District/City</FormLabel> <Select onValueChange={field.onChange} value={field.value} disabled={!stateCode}> <FormControl> <SelectTrigger> <SelectValue placeholder="Select district/city" /> </SelectTrigger> </FormControl> <SelectContent> {cities.map(c => <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>)} </SelectContent> </Select> <FormMessage /> </FormItem> )} />
+            <FormField
+                control={form.control}
+                name="country"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Country</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                        <SelectTrigger>
+                        <SelectValue placeholder="Select country" />
+                        </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                        {countries.map(c => <SelectItem key={c.isoCode} value={c.isoCode}>{c.name}</SelectItem>)}
+                    </SelectContent>
+                    </Select>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+            <FormField
+                control={form.control}
+                name="state"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>State</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value} disabled={!countryCode}>
+                    <FormControl>
+                        <SelectTrigger>
+                        <SelectValue placeholder="Select state" />
+                        </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                        {states.map(s => <SelectItem key={s.isoCode} value={s.isoCode}>{s.name}</SelectItem>)}
+                    </SelectContent>
+                    </Select>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+            <FormField
+                control={form.control}
+                name="district"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>District/City</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value} disabled={!stateCode}>
+                    <FormControl>
+                        <SelectTrigger>
+                        <SelectValue placeholder="Select district/city" />
+                        </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                        {cities.map(c => <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>)}
+                    </SelectContent>
+                    </Select>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
