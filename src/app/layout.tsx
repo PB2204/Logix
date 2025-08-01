@@ -6,6 +6,7 @@ import Header from '@/components/shared/Header';
 import Script from 'next/script';
 import { LoaderProvider } from '@/context/LoaderContext';
 import PageLoader from '@/components/shared/PageLoader';
+import { AuthProvider } from '@/context/AuthContext';
 
 export const metadata: Metadata = {
   title: 'Logix - AI-Powered Learning Companion',
@@ -28,12 +29,14 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased min-h-screen flex flex-col">
-        <LoaderProvider>
-          <PageLoader />
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Toaster />
-        </LoaderProvider>
+        <AuthProvider>
+          <LoaderProvider>
+            <PageLoader />
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Toaster />
+          </LoaderProvider>
+        </AuthProvider>
         <Script src="https://cdn.jsdelivr.net/npm/typescript@5.3.3/lib/typescript.min.js" />
       </body>
     </html>

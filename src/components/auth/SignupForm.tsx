@@ -22,9 +22,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
 import React from "react";
 import { studyTopics } from "@/content/study-materials";
+import { auth, db } from "@/lib/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 
 const strongPasswordRegex = new RegExp(
   "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
@@ -40,11 +44,11 @@ const formSchema = z.object({
   password: z.string().regex(strongPasswordRegex, "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."),
   confirmPassword: z.string(),
   profession: z.string({ required_error: "Please select a profession." }),
+  phone: z.string().regex(phoneRegex, "Please enter a valid 10-digit Indian phone number."),
   organization: z.string().regex(orgRegex, "Please enter a valid organization/college name."),
   department: z.string().regex(orgRegex, "Please enter a valid department name."),
   semester: z.string().optional(),
   areaOfInterest: z.string().optional(),
-  phone: z.string().regex(phoneRegex, "Please enter a valid 10-digit Indian phone number."),
   gender: z.string({ required_error: "Please select a gender." }),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords do not match",
@@ -54,8 +58,10 @@ const formSchema = z.object({
 
 export function SignupForm() {
   const { toast } = useToast();
+  const router = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,12 +78,50 @@ export function SignupForm() {
 
   const profession = form.watch("profession");
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: "Signup Submitted!",
-      description: "Check the console for form data. Full auth coming soon!",
-    });
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    try {
+      const { email, password, name, phone, profession, organization, department, semester, areaOfInterest, gender } = values;
+      
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Now save the extra details to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name,
+        email,
+        phone,
+        profession,
+        organization,
+        department,
+        semester: semester || null,
+        areaOfInterest: areaOfInterest || null,
+        gender
+      });
+
+      toast({
+        title: "Account Created!",
+        description: "You have successfully signed up. Please login.",
+        variant: "default",
+      });
+
+      router.push('/login');
+
+    } catch (error: any) {
+      console.error("Signup failed:", error);
+      let errorMessage = "An unexpected error occurred. Please try again.";
+      if (error.code === "auth/email-already-in-use") {
+        errorMessage = "This email address is already in use.";
+      }
+      toast({
+        title: "Signup Failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -85,7 +129,7 @@ export function SignupForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField control={form.control} name="name" render={({ field }) => ( <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input placeholder="e.g., Aarav Sharma" {...field} /></FormControl><FormMessage /></FormItem>)} />
-          <FormField control={form.control} name="email" render={({ field }) => ( <FormItem><FormLabel>Email</FormLabel><FormControl><Input placeholder="you@example.com" {...field} /></FormControl><FormMessage /></FormItem>)} />
+          <FormField control={form.control} name="email" render={({ field }) => ( <FormItem><FormLabel>Email</FormLabel><FormControl><Input placeholder="aarav.sharma@example.com" {...field} /></FormControl><FormMessage /></FormItem>)} />
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -160,7 +204,7 @@ export function SignupForm() {
         </div>
         
         {profession === "student" && (
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+             <div className="grid grid-cols-1">
                  <FormField
                   control={form.control}
                   name="semester"
@@ -221,8 +265,9 @@ export function SignupForm() {
                 )} />
         </div>
         
-        <Button type="submit" className="w-full !mt-8" variant="accent">
-          Create Account
+        <Button type="submit" className="w-full !mt-8" variant="accent" disabled={isLoading}>
+          {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+          {isLoading ? 'Creating Account...' : 'Create Account'}
         </Button>
       </form>
     </Form>
