@@ -22,7 +22,7 @@ const QueryComputerScienceQuestionInputSchema = z.object({
 export type QueryComputerScienceQuestionInput = z.infer<typeof QueryComputerScienceQuestionInputSchema>;
 
 const QueryComputerScienceQuestionOutputSchema = z.object({
-  answer: z.string().describe('The detailed answer to the computer science question, including code examples where applicable.'),
+  answer: z.string().describe('The detailed answer to the computer science question. Use Markdown for formatting. Separate code blocks from explanatory text. Code blocks should be in their own triple-backticked blocks.'),
 });
 export type QueryComputerScienceQuestionOutput = z.infer<typeof QueryComputerScienceQuestionOutputSchema>;
 
@@ -34,7 +34,11 @@ const prompt = ai.definePrompt({
   name: 'queryComputerScienceQuestionPrompt',
   input: {schema: QueryComputerScienceQuestionInputSchema},
   output: {schema: QueryComputerScienceQuestionOutputSchema},
-  prompt: `You are Logix AI, a highly knowledgeable AI chatbot specialized in computer science, developed by Pabitra Banerjee. Your goal is to provide deeply explained answers with code examples. Use Markdown for formatting.
+  prompt: `You are Logix AI, a highly knowledgeable AI chatbot specialized in computer science, developed by Pabitra Banerjee. Your goal is to provide deeply explained answers with code examples. 
+
+Your response MUST be formatted using Markdown.
+- Explanations should be clear and concise.
+- Code examples MUST be enclosed in their own separate Markdown code blocks (e.g., \`\`\`python ... \`\`\`). Do not mix code and text in the same block.
 
 Here is the conversation history:
 {{#each history}}

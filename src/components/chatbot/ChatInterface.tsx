@@ -14,18 +14,17 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { coldarkDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 
-
 interface Message {
-  id: number;
+  id: string;
   role: "user" | "bot";
   content: string;
+  type: 'text' | 'code';
+  language?: string;
   isLoading?: boolean;
 }
 
-const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
+const CodeBlock = ({ language, code }: { language: string | undefined, code: string }) => {
     const [isCopied, setIsCopied] = useState(false);
-    const match = /language-(\w+)/.exec(className || '');
-    const code = String(children).replace(/\n$/, '');
 
     const handleCopy = () => {
         navigator.clipboard.writeText(code).then(() => {
@@ -34,10 +33,10 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
         });
     };
 
-    return !inline && match ? (
+    return (
         <div className="my-2 rounded-md bg-black text-white border border-border">
             <div className="flex items-center justify-between rounded-t-md bg-gray-800 px-4 py-2">
-                <span className="text-sm font-code text-gray-400">{match[1]}</span>
+                <span className="text-sm font-code text-gray-400">{language || 'code'}</span>
                 <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7 text-white hover:bg-gray-700">
                     {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
                 </Button>
@@ -45,20 +44,49 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
             <div className="overflow-x-auto">
                 <SyntaxHighlighter
                     style={coldarkDark}
-                    language={match[1]}
+                    language={language}
                     PreTag="div"
-                    {...props}
                     className="!p-4 !m-0 !bg-transparent text-xs"
                 >
                     {code}
                 </SyntaxHighlighter>
             </div>
         </div>
-    ) : (
-        <code className={cn("font-code bg-muted text-foreground px-1 py-0.5 rounded-sm", className)} {...props}>
-            {children}
-        </code>
     );
+};
+
+const parseBotResponse = (response: string): Omit<Message, 'id' | 'role' | 'isLoading'>[] => {
+    const chunks = [];
+    const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g;
+    let lastIndex = 0;
+    let match;
+
+    while ((match = codeBlockRegex.exec(response)) !== null) {
+        // Add text part before the code block
+        if (match.index > lastIndex) {
+            const textContent = response.substring(lastIndex, match.index).trim();
+            if (textContent) {
+                chunks.push({ type: 'text' as const, content: textContent });
+            }
+        }
+
+        // Add code block
+        const language = match[1] || 'bash';
+        const codeContent = match[2].trim();
+        chunks.push({ type: 'code' as const, content: codeContent, language });
+
+        lastIndex = match.index + match[0].length;
+    }
+
+    // Add any remaining text after the last code block
+    if (lastIndex < response.length) {
+        const textContent = response.substring(lastIndex).trim();
+        if (textContent) {
+            chunks.push({ type: 'text' as const, content: textContent });
+        }
+    }
+
+    return chunks;
 };
 
 
@@ -81,14 +109,16 @@ export function ChatInterface() {
     if (!input.trim()) return;
 
     const userMessage: Message = {
-      id: Date.now(),
+      id: `user-${Date.now()}`,
       role: "user",
+      type: 'text',
       content: input,
     };
     
     const botLoadingMessage: Message = {
-        id: Date.now() + 1,
+        id: `bot-loading-${Date.now()}`,
         role: "bot",
+        type: 'text',
         content: "...",
         isLoading: true,
     }
@@ -96,39 +126,31 @@ export function ChatInterface() {
     setMessages((prev) => [...prev, userMessage, botLoadingMessage]);
     setInput("");
     
-    const history = messages.filter(m => !m.isLoading).map(({id, isLoading, ...rest}) => rest);
+    const history = messages
+        .filter(m => !m.isLoading)
+        .map(({role, content}) => ({role: role === 'user' ? 'user' : 'bot', content}));
 
     try {
       const result = await queryComputerScienceQuestion({ query: input, history });
-      const botMessage: Message = {
-        id: Date.now() + 1,
-        role: "bot",
-        content: result.answer,
-      };
-      setMessages((prev) => [...prev.slice(0, -1), botMessage]);
+      const botResponseChunks = parseBotResponse(result.answer);
+
+      const botMessages: Message[] = botResponseChunks.map((chunk, index) => ({
+        id: `bot-${Date.now()}-${index}`,
+        role: 'bot',
+        ...chunk
+      }));
+
+      setMessages((prev) => [...prev.slice(0, -1), ...botMessages]);
     } catch (error) {
       const errorMessage: Message = {
-        id: Date.now() + 1,
+        id: `bot-error-${Date.now()}`,
         role: "bot",
+        type: 'text',
         content: "Sorry, I encountered an error. Please try again.",
       };
       setMessages((prev) => [...prev.slice(0, -1), errorMessage]);
       console.error("AI query failed:", error);
     }
-  };
-  
-  const formatContent = (content: string) => {
-    return (
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        className="prose prose-sm dark:prose-invert max-w-none prose-p:my-2 prose-headings:my-3 prose-ul:my-2"
-        components={{
-            code: CodeBlock,
-        }}
-      >
-        {content}
-      </ReactMarkdown>
-    );
   };
 
   return (
@@ -158,11 +180,11 @@ export function ChatInterface() {
               )}
               <div
                 className={cn(
-                  "rounded-lg p-3 text-sm",
-                  "max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl",
+                  "rounded-lg text-sm max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl min-w-0",
+                  message.type === 'text' && "p-3",
                   message.role === "user"
                     ? "bg-gradient-accent text-white"
-                    : "bg-gradient-card border"
+                    : message.type === 'text' && "bg-gradient-card border"
                 )}
               >
                 {message.isLoading ? (
@@ -170,7 +192,16 @@ export function ChatInterface() {
                         <Loader className="h-4 w-4 animate-spin"/>
                         <span>Thinking...</span>
                     </div>
-                ) : <div className="min-w-0">{formatContent(message.content)}</div>}
+                ) : message.type === 'code' ? (
+                    <CodeBlock language={message.language} code={message.content} />
+                ) : (
+                    <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        className="prose prose-sm dark:prose-invert max-w-none prose-p:my-2 prose-headings:my-3 prose-ul:my-2"
+                    >
+                        {message.content}
+                    </ReactMarkdown>
+                )}
               </div>
               {message.role === "user" && (
                 <Avatar className="h-8 w-8 shrink-0">
