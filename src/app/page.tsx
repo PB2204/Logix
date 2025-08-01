@@ -3,27 +3,23 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, Star, ArrowRight, BrainCircuit, Bug, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
-import { AnimatedShapes } from '@/components/shared/AnimatedShapes';
 
 const HeroSection = () => (
   <section className="w-full py-20 md:py-32 lg:py-40 relative overflow-hidden">
-    <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-    <div className="container mx-auto text-center px-4 md:px-6 relative z-10">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-5xl font-headline font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl text-transparent bg-clip-text bg-gradient-primary">
-          Logix : Learn Logically
-        </h1>
-        <p className="mt-6 text-lg md:text-xl text-foreground/80">
-          Your AI-Powered Learning Companion for Computer Science. Master complex topics, debug code with ease, and access all your study materials in one place.
-        </p>
-        <div className="mt-10 flex justify-center gap-4">
-          <Button size="lg" asChild className="text-lg px-8 py-6">
-            <Link href="/playground">Get Started <ArrowRight className="ml-2" /></Link>
-          </Button>
-          <Button size="lg" variant="outline" asChild className="text-lg px-8 py-6">
-            <Link href="/study-materials">Explore Materials</Link>
-          </Button>
-        </div>
+    <div className="container mx-auto text-center px-4 md:px-6">
+      <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl">
+        Logix : Learn Logically
+      </h1>
+      <p className="mt-6 text-lg md:text-xl text-muted-foreground">
+        Your AI-Powered Learning Companion for Computer Science. Master complex topics, debug code with ease, and access all your study materials in one place.
+      </p>
+      <div className="mt-10 flex justify-center gap-4">
+        <Button size="lg" asChild className="text-lg px-8 py-6">
+          <Link href="/playground">Get Started <ArrowRight className="ml-2" /></Link>
+        </Button>
+        <Button size="lg" variant="outline" asChild className="text-lg px-8 py-6">
+          <Link href="/study-materials">Explore Materials</Link>
+        </Button>
       </div>
     </div>
   </section>

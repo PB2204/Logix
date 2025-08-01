@@ -167,30 +167,3 @@
 .token.entity {
 	cursor: help;
 }
-
-@layer utilities {
-  .shape-circle {
-    clip-path: circle(50% at 50% 50%);
-  }
-  .shape-square {
-    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  }
-  .shape-triangle {
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  }
-
-  .animate-fall {
-    animation: fall linear infinite;
-  }
-}
-
-@keyframes fall {
-  0% {
-    transform: translateY(-10vh) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) rotate(360deg);
-    opacity: 0;
-  }
-}
