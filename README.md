@@ -3,7 +3,7 @@
 
 <p align="center">
   <strong>Developed & Maintained by <a href="https://mbwebbers.tech">MB WEBBER'S</a></strong><br/>
-  <em>Founder & CEO: <a href="https://www.coderpabitra.me/">Pabitra Banerjee</a></em>
+  <em>Founder & CEO: <a href="https://www.linkedin.com/in/pabitra-banerjee/">Pabitra Banerjee</a></em>
 </p>
 
 ---
