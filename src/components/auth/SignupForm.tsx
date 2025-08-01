@@ -204,7 +204,7 @@ export function SignupForm() {
         </div>
         
         {profession === "student" && (
-             <div className="grid grid-cols-1">
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                  <FormField
                   control={form.control}
                   name="semester"
@@ -220,6 +220,7 @@ export function SignupForm() {
                         <FormMessage />
                     </FormItem>
                 )} />
+                <div />
              </div>
         )}
         

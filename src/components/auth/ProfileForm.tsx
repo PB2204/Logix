@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -8,6 +9,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/context/AuthContext";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -19,20 +22,35 @@ const formSchema = z.object({
 
 export function ProfileForm() {
   const { toast } = useToast();
+  const { userData } = useAuth();
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    // In a real app, you'd fetch and populate this data
     defaultValues: {
-      name: "Alex Doe",
-      email: "alex.doe@example.com",
-      phone: "987-654-3210",
-      college: "State University",
-      semester: "4",
+      name: "",
+      email: "",
+      phone: "",
+      college: "",
+      semester: "1",
     },
   });
 
+  useEffect(() => {
+    if (userData) {
+      form.reset({
+        name: userData.name || "",
+        email: userData.email || "",
+        phone: userData.phone || "",
+        college: userData.organization || "",
+        semester: userData.semester || "1",
+      });
+    }
+  }, [userData, form]);
+
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    // Here you would handle updating the user data in Firestore
     toast({
       title: "Profile Updated!",
       description: "Your information has been successfully saved.",
@@ -102,7 +120,7 @@ export function ProfileForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Semester</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select your current semester" />
