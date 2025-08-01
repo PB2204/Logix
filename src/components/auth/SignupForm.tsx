@@ -42,9 +42,9 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address."),
   password: z.string().regex(strongPasswordRegex, "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."),
   confirmPassword: z.string(),
-  profession: z.string({ required_error: "Please select a profession." }),
   organization: z.string().regex(orgRegex, "Please enter a valid organization/college name."),
   department: z.string().regex(orgRegex, "Please enter a valid department name."),
+  profession: z.string({ required_error: "Please select a profession." }),
   semester: z.string().optional(),
   dob: z.date({ required_error: "A date of birth is required." }),
   phone: z.string().regex(phoneRegex, "Please enter a valid phone number."),
@@ -159,20 +159,44 @@ export function SignupForm() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField control={form.control} name="dob" render={({ field }) => (
+          <FormField
+            control={form.control}
+            name="dob"
+            render={({ field }) => (
               <FormItem className="flex flex-col pt-2">
                 <FormLabel>Date of birth</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
-                      <Button variant={"outline"} className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
-                        {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
+                    <Calendar
+                      mode="single"
+                      captionLayout="dropdown-buttons"
+                      fromYear={1900}
+                      toYear={new Date().getFullYear()}
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) =>
+                        date > new Date() || date < new Date("1900-01-01")
+                      }
+                      initialFocus
+                    />
                   </PopoverContent>
                 </Popover>
                 <FormMessage />
