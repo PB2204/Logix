@@ -153,19 +153,30 @@ export function SignupForm() {
                 )}
              />
         </div>
-
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField control={form.control} name="organization" render={({ field }) => ( <FormItem><FormLabel>Organization/College</FormLabel><FormControl><Input placeholder="e.g., IIT Bombay" {...field} /></FormControl><FormMessage /></FormItem>)} />
+          <FormField control={form.control} name="department" render={({ field }) => ( <FormItem><FormLabel>Department</FormLabel><FormControl><Input placeholder="e.g., Computer Science & Engineering" {...field} /></FormControl><FormMessage /></FormItem>)} />
+        </div>
+        
         {profession === "student" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField control={form.control} name="organization" render={({ field }) => ( <FormItem><FormLabel>College</FormLabel><FormControl><Input placeholder="e.g., IIT Bombay" {...field} /></FormControl><FormMessage /></FormItem>)} />
-              <FormField control={form.control} name="department" render={({ field }) => ( <FormItem><FormLabel>Department</FormLabel><FormControl><Input placeholder="e.g., Computer Science & Engineering" {...field} /></FormControl><FormMessage /></FormItem>)} />
-            </div>
-        )}
-
-        {profession !== "student" && (
              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField control={form.control} name="organization" render={({ field }) => ( <FormItem><FormLabel>Organization</FormLabel><FormControl><Input placeholder="e.g., Tata Consultancy Services" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                <FormField control={form.control} name="department" render={({ field }) => ( <FormItem><FormLabel>Department</FormLabel><FormControl><Input placeholder="e.g., Digital Enterprise" {...field} /></FormControl><FormMessage /></FormItem>)} />
-            </div>
+                 <FormField
+                  control={form.control}
+                  name="semester"
+                  render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Semester</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                                <SelectTrigger><SelectValue placeholder="Select Semester" /></SelectTrigger>
+                            </FormControl>
+                            <SelectContent>{[...Array(8)].map((_, i) => (<SelectItem key={i + 1} value={`${i + 1}`}>Semester {i + 1}</SelectItem>))}</SelectContent>
+                        </Select>
+                        <FormMessage />
+                    </FormItem>
+                )} />
+             </div>
         )}
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -188,46 +199,28 @@ export function SignupForm() {
                   <FormMessage />
                 </FormItem>
             )} />
-            {profession === "student" ? (
-                <FormField
-                  control={form.control}
-                  name="semester"
-                  render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Semester</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                                <SelectTrigger><SelectValue placeholder="Select Semester" /></SelectTrigger>
-                            </FormControl>
-                            <SelectContent>{[...Array(8)].map((_, i) => (<SelectItem key={i + 1} value={`${i + 1}`}>Semester {i + 1}</SelectItem>))}</SelectContent>
-                        </Select>
-                        <FormMessage />
-                    </FormItem>
+            <FormField
+                control={form.control}
+                name="gender"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Gender</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                        <SelectTrigger><SelectValue placeholder="Select your gender" /></SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                        <SelectItem value="male">Male</SelectItem>
+                        <SelectItem value="female">Female</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                        <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                    </SelectContent>
+                    </Select>
+                    <FormMessage />
+                </FormItem>
                 )} />
-            ) : <div />}
         </div>
         
-        <FormField
-            control={form.control}
-            name="gender"
-            render={({ field }) => (
-            <FormItem className="pt-2">
-                <FormLabel>Gender</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                    <SelectTrigger><SelectValue placeholder="Select your gender" /></SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                    <SelectItem value="male">Male</SelectItem>
-                    <SelectItem value="female">Female</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                    <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
-                </SelectContent>
-                </Select>
-                <FormMessage />
-            </FormItem>
-            )} />
-
         <Button type="submit" className="w-full !mt-8" variant="accent">
           Create Account
         </Button>
