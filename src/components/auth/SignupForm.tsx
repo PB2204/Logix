@@ -14,8 +14,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import React, { useState, useEffect } from "react";
-import { getAllCountries, getStatesOfCountry, getCitiesOfState } from '@/lib/location-data';
+import React from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -32,9 +31,9 @@ const formSchema = z.object({
   whatYouDo: z.string().optional(),
   whereYouWork: z.string().optional(),
   specify: z.string().optional(),
-  country: z.string({ required_error: "Please select a country." }),
-  state: z.string({ required_error: "Please select a state." }),
-  district: z.string({ required_error: "Please select a district/city." }),
+  country: z.string().min(2, "Country is required."),
+  state: z.string().min(2, "State is required."),
+  district: z.string().min(2, "District/City is required."),
   dob: z.date({
     required_error: "A date of birth is required.",
   }),
@@ -75,40 +74,13 @@ export function SignupForm() {
       email: "",
       phone: "",
       password: "",
+      country: "",
+      state: "",
+      district: "",
     },
   });
 
   const profession = form.watch("profession");
-  const countryCode = form.watch("country");
-  const stateCode = form.watch("state");
-
-  const [countries, setCountries] = useState<any[]>([]);
-  const [states, setStates] = useState<any[]>([]);
-  const [cities, setCities] = useState<any[]>([]);
-
-  useEffect(() => {
-    setCountries(getAllCountries());
-  }, []);
-
-  useEffect(() => {
-    if (countryCode) {
-      setStates(getStatesOfCountry(countryCode));
-      form.setValue("state", "");
-      form.setValue("district", "");
-    } else {
-      setStates([]);
-      setCities([]);
-    }
-  }, [countryCode, form]);
-
-  useEffect(() => {
-    if (stateCode) {
-      setCities(getCitiesOfState(countryCode, stateCode));
-      form.setValue("district", "");
-    } else {
-      setCities([]);
-    }
-  }, [stateCode, countryCode, form]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -214,16 +186,9 @@ export function SignupForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Country</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select country" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {countries.map(c => <SelectItem key={c.isoCode} value={c.isoCode}>{c.name}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <Input placeholder="Your Country" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -234,16 +199,9 @@ export function SignupForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>State</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value} disabled={!countryCode}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select state" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {states.map(s => <SelectItem key={s.isoCode} value={s.isoCode}>{s.name}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <Input placeholder="Your State" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -254,16 +212,9 @@ export function SignupForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>District/City</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value} disabled={!stateCode}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select district/city" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {cities.map(c => <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
+                   <FormControl>
+                    <Input placeholder="Your District/City" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
