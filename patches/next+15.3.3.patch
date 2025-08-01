@@ -1,0 +1,24 @@
+diff --git a/node_modules/next/dist/build/webpack/plugins/next-trace-entrypoints-plugin.js b/node_modules/next/dist/build/webpack/plugins/next-trace-entrypoints-plugin.js
+index 927e53f..4a72e81 100644
+--- a/node_modules/next/dist/build/webpack/plugins/next-trace-entrypoints-plugin.js
++++ b/node_modules/next/dist/build/webpack/plugins/next-trace-entrypoints-plugin.js
+@@ -107,7 +107,7 @@ class NextTraceEntrypointsPlugin {
+                     // esm imports with .mjs could be confused as assets,
+                     // we can't trace them directly as they might be part
+                     // of the magic of splitting between server and client
+-                    if (isModule && !dep.request.endsWith(".mjs")) {
++                    if (isModule && !(dep.request.endsWith(".mjs") || dep.request.endsWith(".ts"))) {
+                         if (dep.request.startsWith("next/")) {
+                             dep.request = (0, _path.join)(this.appDir, this.isDev ? ".next" : ".next/server", (0, _path.relative)(this.appDir, _path.sep), // Go from app-dir to the project root
+                             dep.request);
+diff --git a/node_modules/next/dist/server/require-hook.js b/node_modules/next/dist/server/require-hook.js
+index ee07943..6114b31 100644
+--- a/node_modules/next/dist/server/require-hook.js
++++ b/node_modules/next/dist/server/require-hook.js
+@@ -19,4 +19,4 @@
+  * @returns the loaded module
+  */ function require_hook(mod) {
+     return mod;
+-}
+\ No newline at end of file
++}
