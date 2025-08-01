@@ -46,7 +46,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
                 language={match[1]}
                 PreTag="div"
                 {...props}
-                className="!p-4 !m-0 !bg-transparent overflow-x-auto"
+                className="!p-4 !m-0 !bg-transparent overflow-x-auto text-xs"
             >
                 {code}
             </SyntaxHighlighter>
@@ -131,7 +131,7 @@ export function ChatInterface() {
   return (
     <div className="flex flex-col h-full">
       <ScrollArea className="flex-1 p-2 md:p-4" ref={scrollAreaRef}>
-        <div className="space-y-6">
+        <div className="space-y-4">
           {messages.length === 0 && (
             <div className="text-center text-muted-foreground pt-10">
               <Bot className="mx-auto h-12 w-12 mb-4" />
@@ -142,20 +142,20 @@ export function ChatInterface() {
             <div
               key={message.id}
               className={cn(
-                "flex items-start gap-2 md:gap-4",
+                "flex items-start gap-3",
                 message.role === "user" ? "justify-end" : ""
               )}
             >
               {message.role === "bot" && (
-                <Avatar className="h-8 w-8 md:h-9 md:w-9">
+                <Avatar className="h-8 w-8 shrink-0">
                     <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-primary text-primary-foreground">
-                        <Bot className="h-4 w-4 md:h-5 md:w-5" />
+                        <Bot className="h-4 w-4" />
                     </div>
                 </Avatar>
               )}
               <div
                 className={cn(
-                  "max-w-xs md:max-w-md lg:max-w-2xl rounded-lg p-3 text-sm",
+                  "max-w-[85%] rounded-lg p-3 text-sm",
                   message.role === "user"
                     ? "bg-gradient-accent text-white"
                     : "bg-gradient-card border"
@@ -169,9 +169,9 @@ export function ChatInterface() {
                 ) : formatContent(message.content)}
               </div>
               {message.role === "user" && (
-                <Avatar className="h-8 w-8 md:h-9 md:w-9">
+                <Avatar className="h-8 w-8 shrink-0">
                     <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-accent text-accent-foreground">
-                        <User className="h-4 w-4 md:h-5 md:w-5" />
+                        <User className="h-4 w-4" />
                     </div>
                 </Avatar>
               )}
@@ -184,7 +184,7 @@ export function ChatInterface() {
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about data structures, algorithms, etc."
+            placeholder="Ask about data structures, etc."
             className="flex-1"
           />
           <Button type="submit" size="icon" disabled={!input.trim()}>
