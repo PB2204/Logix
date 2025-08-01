@@ -106,7 +106,7 @@ const PopularTopicsSection = () => {
         // Intermediate
         { name: "Software Engineering", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2.5a2.5 2.5 0 0 1 5 0V5a2.5 2.5 0 0 1-5 0V2.5zM4.5 16.5a2.5 2.5 0 0 0 5 0V14a2.5 2.5 0 0 0-5 0v2.5z"></path><path d="M7 14v-1.5a2.5 2.5 0 0 1 5 0V14"></path><path d="M17 5v1.5a2.5 2.5 0 0 0 5 0V5"></path><path d="M19.5 16.5a2.5 2.5 0 0 1-5 0V14a2.5 2.5 0 0 1 5 0v2.5z"></path><path d="M7 9.5a2.5 2.5 0 0 0 5 0V7a2.5 2.5 0 0 0-5 0v2.5z"></path><path d="M12 16.5V9.5"></path></svg> },
         { name: "Web Development", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 12.5 8 15l2 2.5M14 12.5 16 15l-2 2.5"></path><path d="m3 2 9 9 9-9"></path><path d="m3 22 9-9 9 9"></path></svg> },
-        { name: "Cybersecurity" },
+        { name: "Cybersecurity", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> },
         { name: "Compiler Design", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19l-7-7 7-7 7 7-7 7z"></path><path d="M12 5v14"></path><path d="M5 12h14"></path></svg> },
 
         // Advanced
