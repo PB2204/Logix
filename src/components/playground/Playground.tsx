@@ -344,7 +344,7 @@ export function Playground() {
       <div className="flex flex-col gap-4 w-full md:w-1/2 h-full">
         <div className="flex items-center justify-between">
           <Select value={language} onValueChange={handleLanguageChange}>
-            <SelectTrigger className="w-[140px] sm:w-[180px]">
+            <SelectTrigger className="w-[120px] sm:w-[180px]">
               <SelectValue placeholder="Select Language" />
             </SelectTrigger>
             <SelectContent>
@@ -353,7 +353,7 @@ export function Playground() {
               ))}
             </SelectContent>
           </Select>
-          <div className="flex gap-4">
+          <div className="flex gap-2 sm:gap-4">
             <Button onClick={handleAnalyze} disabled={isAnalyzing || !code.trim()}>
               {isAnalyzing ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
               Analyze
@@ -373,7 +373,7 @@ export function Playground() {
             />
         </Card>
       </div>
-      <div className="w-full md:w-1/2 h-full flex flex-col gap-4">
+      <div className="w-full md:w-1/2 h-full flex flex-col">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
           <TabsList className="grid w-full grid-cols-4 sm:flex sm:overflow-x-auto sm:w-auto">
             <TabsTrigger value="input">Input</TabsTrigger>
@@ -488,4 +488,6 @@ export function Playground() {
 }
 
     
+    
+
     
