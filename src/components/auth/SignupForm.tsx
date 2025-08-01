@@ -181,26 +181,26 @@ export function SignupForm() {
         </div>
 
         <FormField
-            control={form.control}
-            name="profession"
-            render={({ field }) => (
-                <FormItem>
-                <FormLabel>Profession</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                        <SelectValue placeholder="Select your profession" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="student">Student</SelectItem>
-                    <SelectItem value="professional">Working Professional</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-                </FormItem>
-            )}
+          control={form.control}
+          name="profession"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Profession</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your profession" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="student">Student</SelectItem>
+                  <SelectItem value="professional">Working Professional</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
         />
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -209,64 +209,64 @@ export function SignupForm() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <FormField
-                control={form.control}
-                name="country"
-                render={({ field }) => (
+              control={form.control}
+              name="country"
+              render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Country</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                          <SelectTrigger>
-                          <SelectValue placeholder="Select country" />
-                          </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                          {countries.map(c => <SelectItem key={c.isoCode} value={c.isoCode}>{c.name}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
+                  <FormLabel>Country</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select country" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {countries.map(c => <SelectItem key={c.isoCode} value={c.isoCode}>{c.name}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
                 </FormItem>
-                )}
+              )}
             />
             <FormField
-                control={form.control}
-                name="state"
-                render={({ field }) => (
+              control={form.control}
+              name="state"
+              render={({ field }) => (
                 <FormItem>
-                    <FormLabel>State</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value} disabled={!countryCode}>
-                      <FormControl>
-                          <SelectTrigger>
-                          <SelectValue placeholder="Select state" />
-                          </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                          {states.map(s => <SelectItem key={s.isoCode} value={s.isoCode}>{s.name}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
+                  <FormLabel>State</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value} disabled={!countryCode}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select state" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {states.map(s => <SelectItem key={s.isoCode} value={s.isoCode}>{s.name}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
                 </FormItem>
-                )}
+              )}
             />
             <FormField
-                control={form.control}
-                name="district"
-                render={({ field }) => (
+              control={form.control}
+              name="district"
+              render={({ field }) => (
                 <FormItem>
-                    <FormLabel>District/City</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value} disabled={!stateCode}>
-                      <FormControl>
-                          <SelectTrigger>
-                          <SelectValue placeholder="Select district/city" />
-                          </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                          {cities.map(c => <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
+                  <FormLabel>District/City</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value} disabled={!stateCode}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select district/city" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {cities.map(c => <SelectItem key={c.name} value={c.name}>{c.name}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
                 </FormItem>
-                )}
+              )}
             />
         </div>
 
