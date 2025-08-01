@@ -12,41 +12,41 @@
     --gradient-accent-from: 300 89% 61%;
     --gradient-accent-to: 45 95% 55%;
     
-    --gradient-background-from: 222 47.4% 11.2%;
-    --gradient-background-to: 240 50% 5%;
+    --gradient-background-from: 240 10% 4%;
+    --gradient-background-to: 240 5% 2%;
 
-    --gradient-card-from: 224 71.4% 15.1%;
-    --gradient-card-to: 230 60% 8%;
+    --gradient-card-from: 240 4% 12%;
+    --gradient-card-to: 240 5% 8%;
 
     --gradient-input-from: 217.2 32.6% 17.5%;
     --gradient-input-to: 220 30% 12%;
     
-    --background: 222 47.4% 11.2%;
-    --foreground: 0 0% 100%;
+    --background: 240 10% 4%;
+    --foreground: 210 40% 98%;
 
-    --card: 224 71.4% 15.1%;
-    --card-foreground: 0 0% 100%;
+    --card: 240 4% 12%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 240 10% 4%;
+    --popover-foreground: 210 40% 98%;
 
     --primary: 320 80% 60%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 240 4% 12%;
+    --secondary-foreground: 210 40% 98%;
     
-    --muted: 217.2 32.6% 25.5%;
-    --muted-foreground: 215 20.2% 75.1%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 65%;
     
     --accent: 300 89% 61%;
-    --accent-foreground: 0 0% 100%;
+    --accent-foreground: 210 40% 98%;
     
-    --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 22.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 240 4% 20%;
+    --input: 240 4% 16%;
     --ring: 35 90% 55%;
     --radius: 0.5rem;
   }
@@ -173,7 +173,7 @@
     clip-path: circle(50% at 50% 50%);
   }
   .shape-square {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   }
   .shape-triangle {
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
