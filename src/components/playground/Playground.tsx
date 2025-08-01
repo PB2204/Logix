@@ -18,6 +18,7 @@ import remarkGfm from 'remark-gfm';
 import { cn } from "@/lib/utils";
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Textarea } from "@/components/ui/textarea";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 
 const languages = [
@@ -283,6 +284,7 @@ export function Playground() {
   const [activeTab, setActiveTab] = useState("input");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isExecuting, setIsExecuting] =useState(false);
+  const isMobile = useIsMobile();
 
   const handleLanguageChange = (value: string) => {
     setLanguage(value);
@@ -338,31 +340,42 @@ export function Playground() {
     };
   
   const displayLanguage = languages.find(l => l.value === language)?.value || 'javascript';
+  const selectedLanguageLabel = languages.find(l => l.value === language)?.label || language;
+  
+  const getDisplayLabel = () => {
+    if (isMobile) {
+      if (language === 'javascript') return 'JS';
+      if (language === 'typescript') return 'TS';
+    }
+    return selectedLanguageLabel;
+  }
 
   return (
     <div className="flex flex-col md:flex-row gap-6 h-full">
       <div className="flex flex-col gap-4 w-full md:w-1/2 h-full">
-        <div className="flex items-center justify-between gap-2">
-          <Select value={language} onValueChange={handleLanguageChange}>
-            <SelectTrigger className="w-[120px] sm:w-[180px]">
-              <SelectValue placeholder="Select Language" />
-            </SelectTrigger>
-            <SelectContent>
-              {languages.map((lang) => (
-                <SelectItem key={lang.value} value={lang.value}>{lang.label}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <div className="flex-grow flex justify-end gap-2">
-            <Button onClick={handleAnalyze} disabled={isAnalyzing || !code.trim()}>
-              {isAnalyzing ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
-              Analyze
-            </Button>
-            <Button onClick={handleExecute} disabled={isExecuting} variant="accent">
-              {isExecuting ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : <Play className="mr-2 h-4 w-4" />}
-              Run
-            </Button>
-          </div>
+        <div className="flex items-center gap-2">
+            <Select value={language} onValueChange={handleLanguageChange}>
+                <SelectTrigger className="w-[120px] sm:w-[180px]">
+                    <SelectValue asChild>
+                        <span>{getDisplayLabel()}</span>
+                    </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                {languages.map((lang) => (
+                    <SelectItem key={lang.value} value={lang.value}>{lang.label}</SelectItem>
+                ))}
+                </SelectContent>
+            </Select>
+            <div className="flex-grow flex justify-end gap-2">
+                <Button onClick={handleAnalyze} disabled={isAnalyzing || !code.trim()}>
+                {isAnalyzing ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
+                Analyze
+                </Button>
+                <Button onClick={handleExecute} disabled={isExecuting} variant="accent">
+                {isExecuting ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : <Play className="mr-2 h-4 w-4" />}
+                Run
+                </Button>
+            </div>
         </div>
         <Card className="flex-1 bg-transparent overflow-hidden border-0 shadow-none">
             <CodeEditor
@@ -375,13 +388,13 @@ export function Playground() {
       </div>
       <div className="w-full md:w-1/2 h-full flex flex-col">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
-          <TabsList className="grid w-full grid-cols-4 sm:flex sm:overflow-x-auto sm:w-auto">
+          <TabsList className="grid w-full grid-cols-4 sm:grid-cols-4 sm:overflow-x-auto sm:w-auto mt-4 sm:mt-0">
             <TabsTrigger value="input">Input</TabsTrigger>
             <TabsTrigger value="output">Output</TabsTrigger>
             <TabsTrigger value="analysis">Analysis</TabsTrigger>
             <TabsTrigger value="complexity">Complexity</TabsTrigger>
           </TabsList>
-           <TabsContent value="input" className="flex-1 min-h-0 mt-4">
+           <TabsContent value="input" className="flex-1 min-h-0 mt-2 sm:mt-4">
                 <Card className="h-full bg-gradient-card">
                     <CardContent className="p-0 h-full">
                         <Textarea
@@ -393,7 +406,7 @@ export function Playground() {
                     </CardContent>
                 </Card>
            </TabsContent>
-          <TabsContent value="output" className="flex-1 min-h-0 mt-4">
+          <TabsContent value="output" className="flex-1 min-h-0 mt-2 sm:mt-4">
             <Card className="h-full bg-gradient-card">
                 <CardContent className="p-0 h-full">
                     <div className="p-4 bg-transparent h-full w-full overflow-auto rounded-md font-code text-sm">
@@ -415,7 +428,7 @@ export function Playground() {
                 </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent value="analysis" className="flex-1 min-h-0 mt-4">
+          <TabsContent value="analysis" className="flex-1 min-h-0 mt-2 sm:mt-4">
             <Card className="h-full bg-gradient-card">
                 <CardContent className="p-4 h-full w-full overflow-auto">
                     {isAnalyzing && <div className="flex items-center gap-2 text-sm"><Loader className="h-4 w-4 animate-spin" /><span>Analyzing your code...</span></div>}
@@ -423,7 +436,7 @@ export function Playground() {
                 </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent value="complexity" className="flex-1 min-h-0 mt-4">
+          <TabsContent value="complexity" className="flex-1 min-h-0 mt-2 sm:mt-4">
             <Card className="h-full bg-gradient-card">
                 <CardContent className="p-4 h-full w-full overflow-auto">
                 {isAnalyzing && <div className="flex items-center gap-2 text-sm"><Loader className="h-4 w-4 animate-spin" /><span>Analyzing complexity...</span></div>}
