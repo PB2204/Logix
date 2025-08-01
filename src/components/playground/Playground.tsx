@@ -344,7 +344,7 @@ export function Playground() {
       <div className="flex flex-col gap-4 w-full md:w-1/2 h-full">
         <div className="flex items-center justify-between">
           <Select value={language} onValueChange={handleLanguageChange}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[140px] sm:w-[180px]">
               <SelectValue placeholder="Select Language" />
             </SelectTrigger>
             <SelectContent>
@@ -487,4 +487,5 @@ export function Playground() {
   );
 }
 
+    
     
