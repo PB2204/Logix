@@ -148,14 +148,16 @@ const HowItWorksSection = () => {
                     <p className="text-muted-foreground mt-2">Learning with Logix is simple and intuitive.</p>
                 </div>
                 <div className="relative grid gap-10 md:grid-cols-3">
-                    <div className="absolute top-8 left-0 w-full h-0.5 bg-border -translate-y-1/2 hidden md:block"></div>
+                    <div className="absolute top-10 left-0 w-full h-0.5 bg-border -translate-y-1/2 hidden md:block z-0"></div>
                     {steps.map((step, i) => (
-                        <div key={i} className="relative flex flex-col items-center text-center">
-                            <div className="mb-4 h-16 w-16 rounded-full bg-gradient-primary flex items-center justify-center text-primary-foreground text-2xl font-bold border-4 border-background shadow-lg">
-                                {i + 1}
-                            </div>
-                            <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                            <p className="text-muted-foreground">{step.description}</p>
+                        <div key={i} className="relative z-10">
+                            <Card className="bg-gradient-card border-border/50 text-center p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20">
+                                <div className="mb-4 mx-auto h-20 w-20 rounded-full bg-gradient-primary flex items-center justify-center text-primary-foreground text-3xl font-bold border-4 border-background shadow-lg" style={{textShadow: '0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary))'}}>
+                                    {i + 1}
+                                </div>
+                                <h3 className="text-xl font-bold mb-2 font-headline">{step.title}</h3>
+                                <p className="text-muted-foreground">{step.description}</p>
+                            </Card>
                         </div>
                     ))}
                 </div>
