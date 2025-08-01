@@ -121,7 +121,7 @@ const PopularTopicsSection = () => {
                     <h2 className="text-4xl font-headline font-bold">Explore Popular Topics</h2>
                     <p className="text-muted-foreground mt-2">Dive into key computer science concepts with our curated resources.</p>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <div className="grid grid-cols-3 lg:grid-cols-5 gap-6">
                     {topics.map((topic) => (
                         <Card key={topic.name} className="flex flex-col items-center justify-center p-6 bg-gradient-card border-border/50 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-2">
                             <div className="text-primary mb-3">{topic.icon}</div>
