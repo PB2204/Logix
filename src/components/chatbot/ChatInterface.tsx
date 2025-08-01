@@ -41,15 +41,17 @@ const CodeBlock = ({ node, inline, className, children, ...props }: any) => {
                     {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
                 </Button>
             </div>
-            <SyntaxHighlighter
-                style={coldarkDark}
-                language={match[1]}
-                PreTag="div"
-                {...props}
-                className="!p-4 !m-0 !bg-transparent overflow-x-auto text-xs"
-            >
-                {code}
-            </SyntaxHighlighter>
+            <div className="overflow-x-auto">
+                <SyntaxHighlighter
+                    style={coldarkDark}
+                    language={match[1]}
+                    PreTag="div"
+                    {...props}
+                    className="!p-4 !m-0 !bg-transparent text-xs"
+                >
+                    {code}
+                </SyntaxHighlighter>
+            </div>
         </div>
     ) : (
         <code className={cn("font-code bg-muted text-foreground px-1 py-0.5 rounded-sm", className)} {...props}>
@@ -155,7 +157,7 @@ export function ChatInterface() {
               )}
               <div
                 className={cn(
-                  "rounded-lg p-3 text-sm overflow-x-auto",
+                  "rounded-lg p-3 text-sm",
                   "max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl",
                   message.role === "user"
                     ? "bg-gradient-accent text-white"
