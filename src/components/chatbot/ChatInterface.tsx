@@ -130,7 +130,7 @@ export function ChatInterface() {
 
   return (
     <div className="flex flex-col h-full">
-      <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+      <ScrollArea className="flex-1 p-2 md:p-4" ref={scrollAreaRef}>
         <div className="space-y-6">
           {messages.length === 0 && (
             <div className="text-center text-muted-foreground pt-10">
@@ -142,14 +142,14 @@ export function ChatInterface() {
             <div
               key={message.id}
               className={cn(
-                "flex items-start gap-4",
+                "flex items-start gap-2 md:gap-4",
                 message.role === "user" ? "justify-end" : ""
               )}
             >
               {message.role === "bot" && (
-                <Avatar className="h-9 w-9">
+                <Avatar className="h-8 w-8 md:h-9 md:w-9">
                     <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-primary text-primary-foreground">
-                        <Bot className="h-5 w-5" />
+                        <Bot className="h-4 w-4 md:h-5 md:w-5" />
                     </div>
                 </Avatar>
               )}
@@ -169,9 +169,9 @@ export function ChatInterface() {
                 ) : formatContent(message.content)}
               </div>
               {message.role === "user" && (
-                <Avatar className="h-9 w-9">
+                <Avatar className="h-8 w-8 md:h-9 md:w-9">
                     <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-accent text-accent-foreground">
-                        <User className="h-5 w-5" />
+                        <User className="h-4 w-4 md:h-5 md:w-5" />
                     </div>
                 </Avatar>
               )}
@@ -179,7 +179,7 @@ export function ChatInterface() {
           ))}
         </div>
       </ScrollArea>
-      <div className="p-4 border-t">
+      <div className="p-2 md:p-4 border-t">
         <form onSubmit={handleSendMessage} className="flex gap-2">
           <Input
             value={input}
