@@ -11,6 +11,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect } from "react";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { Loader } from "lucide-react";
+import React from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -22,7 +26,8 @@ const formSchema = z.object({
 
 export function ProfileForm() {
   const { toast } = useToast();
-  const { userData } = useAuth();
+  const { user, userData } = useAuth();
+  const [isLoading, setIsLoading] = React.useState(false);
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,13 +53,30 @@ export function ProfileForm() {
   }, [userData, form]);
 
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    // Here you would handle updating the user data in Firestore
-    toast({
-      title: "Profile Updated!",
-      description: "Your information has been successfully saved.",
-    });
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!user) {
+        toast({ title: "Error", description: "You must be logged in to update your profile.", variant: "destructive" });
+        return;
+    }
+    setIsLoading(true);
+    try {
+        const userDocRef = doc(db, 'users', user.uid);
+        await updateDoc(userDocRef, {
+            name: values.name,
+            phone: values.phone,
+            organization: values.college,
+            semester: values.semester,
+        });
+        toast({
+            title: "Profile Updated!",
+            description: "Your information has been successfully saved.",
+        });
+    } catch (error) {
+        console.error("Profile update failed:", error);
+        toast({ title: "Update Failed", description: "Could not update your profile. Please try again.", variant: "destructive" });
+    } finally {
+        setIsLoading(false);
+    }
   }
 
   return (
@@ -138,8 +160,9 @@ export function ProfileForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Update Profile
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+          {isLoading ? "Updating..." : "Update Profile"}
         </Button>
       </form>
     </Form>
