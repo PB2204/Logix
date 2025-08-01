@@ -23,11 +23,11 @@ interface Message {
   isLoading?: boolean;
 }
 
-const CodeBlock = ({ language, code }: { language: string | undefined, code: string }) => {
+const CodeBlock = ({ language, content }: { language: string | undefined, content: string }) => {
     const [isCopied, setIsCopied] = useState(false);
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(code).then(() => {
+        navigator.clipboard.writeText(content).then(() => {
             setIsCopied(true);
             setTimeout(() => setIsCopied(false), 2000);
         });
@@ -35,9 +35,9 @@ const CodeBlock = ({ language, code }: { language: string | undefined, code: str
 
     return (
         <div className="my-2 rounded-md bg-black text-white border border-border">
-            <div className="flex items-center justify-between rounded-t-md bg-gray-800 px-3 py-1">
+            <div className="flex items-center justify-between rounded-t-md bg-gray-800 px-3 py-1.5 md:px-4 md:py-2">
                 <span className="text-xs font-code text-gray-400">{language || 'code'}</span>
-                <Button variant="ghost" size="icon" onClick={handleCopy} className="h-6 w-6 text-white hover:bg-gray-700 shrink-0">
+                <Button variant="ghost" size="icon" onClick={handleCopy} className="h-7 w-7 text-white hover:bg-gray-700 shrink-0">
                     {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
                 </Button>
             </div>
@@ -46,9 +46,9 @@ const CodeBlock = ({ language, code }: { language: string | undefined, code: str
                     style={coldarkDark}
                     language={language}
                     PreTag="div"
-                    className="!p-3 md:!p-4 !m-0 !bg-transparent text-xs"
+                    className="!p-3 !m-0 !bg-transparent text-xs"
                 >
-                    {code}
+                    {content}
                 </SyntaxHighlighter>
             </div>
         </div>
@@ -182,6 +182,7 @@ export function ChatInterface() {
               <div
                 className={cn(
                   "rounded-lg text-sm max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl min-w-0",
+                  message.type === 'code' && "w-full max-w-[330px]",
                   message.type === 'text' && "p-3",
                   message.role === "user"
                     ? "bg-gradient-accent text-white"
@@ -194,7 +195,7 @@ export function ChatInterface() {
                         <span>Thinking...</span>
                     </div>
                 ) : message.type === 'code' ? (
-                    <CodeBlock language={message.language} code={message.content} />
+                    <CodeBlock language={message.language} content={message.content} />
                 ) : (
                     <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
