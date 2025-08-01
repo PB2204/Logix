@@ -133,7 +133,7 @@ export function ChatInterface() {
       <ScrollArea className="flex-1 p-2 md:p-4" ref={scrollAreaRef}>
         <div className="space-y-4">
           {messages.length === 0 && (
-            <div className="text-center text-muted-foreground pt-10">
+            <div className="text-center text-muted-foreground pt-10 px-4">
               <Bot className="mx-auto h-12 w-12 mb-4" />
               <p>Start the conversation by asking a question below.</p>
             </div>
@@ -155,7 +155,8 @@ export function ChatInterface() {
               )}
               <div
                 className={cn(
-                  "max-w-[85%] rounded-lg p-3 text-sm",
+                  "rounded-lg p-3 text-sm overflow-x-auto",
+                  "max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl",
                   message.role === "user"
                     ? "bg-gradient-accent text-white"
                     : "bg-gradient-card border"
@@ -166,7 +167,7 @@ export function ChatInterface() {
                         <Loader className="h-4 w-4 animate-spin"/>
                         <span>Thinking...</span>
                     </div>
-                ) : formatContent(message.content)}
+                ) : <div className="min-w-0">{formatContent(message.content)}</div>}
               </div>
               {message.role === "user" && (
                 <Avatar className="h-8 w-8 shrink-0">
