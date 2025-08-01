@@ -364,17 +364,19 @@ const Footer = () => (
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center bg-background relative">
+    <div className="flex flex-col items-center justify-center bg-background">
       <BackgroundGlow />
-      <HeroSection />
-      <FeaturesSection />
-      <PopularTopicsSection />
-      <HowItWorksSection />
-      <UseCasesSection />
-      <TestimonialsSection />
-      <BenefitsSection />
-      <CtaSection />
-      <Footer />
+      <div className="relative z-10 w-full">
+        <HeroSection />
+        <FeaturesSection />
+        <PopularTopicsSection />
+        <HowItWorksSection />
+        <UseCasesSection />
+        <TestimonialsSection />
+        <BenefitsSection />
+        <CtaSection />
+        <Footer />
+      </div>
     </div>
   );
 }
