@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import React from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { Link } from "@/components/shared/Link";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
@@ -15,6 +18,8 @@ const formSchema = z.object({
 
 export function LoginForm() {
   const { toast } = useToast();
+  const [showPassword, setShowPassword] = React.useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,15 +58,25 @@ export function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+                <div className="flex justify-between items-center">
+                    <FormLabel>Password</FormLabel>
+                    <Link href="#" className="text-sm text-muted-foreground hover:text-accent transition">
+                        Forgot Password?
+                    </Link>
+                </div>
               <FormControl>
-                <Input type="password" placeholder="••••••••" {...field} />
+                <div className="relative">
+                    <Input type={showPassword ? 'text' : 'password'} placeholder="••••••••" {...field} />
+                    <Button type="button" variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground hover:text-foreground" onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <EyeOff /> : <Eye />}
+                    </Button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" variant="accent">
+        <Button type="submit" className="w-full !mt-8" variant="accent">
           Login
         </Button>
       </form>
