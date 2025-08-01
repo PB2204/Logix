@@ -7,12 +7,13 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
+  "projectId": "logix-hi2ob",
+  "appId": "1:310822622627:web:e97871ebcf557b7c533616",
+  "storageBucket": "logix-hi2ob.firebasestorage.app",
+  "apiKey": "AIzaSyA1JRcMTQlGvf18i54MNQiEIGwWAl3JZP4",
+  "authDomain": "logix-hi2ob.firebaseapp.com",
+  "measurementId": "",
+  "messagingSenderId": "310822622627"
 };
 
 // Initialize Firebase
