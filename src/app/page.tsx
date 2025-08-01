@@ -316,19 +316,33 @@ const BenefitsSection = () => {
 
 const CtaSection = () => (
     <section className="w-full py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6">
-            <div className="bg-gradient-to-r from-accent to-primary rounded-2xl p-10 md:p-16 text-center shadow-2xl">
-                <h2 className="text-4xl font-headline font-bold text-white">Stop Searching. Start Mastering.</h2>
-                <p className="text-lg text-white/80 mt-4 max-w-2xl mx-auto">Join Logix today and gain an unfair advantage in your computer science journey. It's free to get started!</p>
-                <div className="mt-8">
-                    <Button size="lg" variant="secondary" asChild className="text-lg px-8 py-6 transform hover:scale-105 transition-transform">
-                        <Link href="/signup">Sign Up Now <ArrowRight className="ml-2" /></Link>
-                    </Button>
-                </div>
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-accent to-primary p-10 md:p-16 text-center shadow-2xl">
+          <div className="absolute inset-0 bg-grid-pattern bg-repeat opacity-10"></div>
+          <div className="relative z-10">
+            <h2 className="text-4xl font-headline font-bold text-white animate-glow">
+              Stop Searching. Start Mastering.
+            </h2>
+            <p className="text-lg text-white/80 mt-4 max-w-2xl mx-auto">
+              Join Logix today and gain an unfair advantage in your computer science journey. It's free to get started!
+            </p>
+            <div className="mt-8">
+              <Button
+                size="lg"
+                variant="secondary"
+                asChild
+                className="text-lg px-8 py-6 transform transition-transform hover:scale-110 hover:shadow-2xl hover:shadow-black/50"
+              >
+                <Link href="/signup">
+                  Sign Up Now <ArrowRight className="ml-2" />
+                </Link>
+              </Button>
             </div>
+          </div>
         </div>
+      </div>
     </section>
-)
+  );
 
 const Footer = () => (
     <footer className="w-full py-6 border-t border-border/50">
