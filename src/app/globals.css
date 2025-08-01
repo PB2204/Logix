@@ -70,6 +70,22 @@
     border-right: 15px solid transparent;
     border-bottom: 25px solid;
   }
+
+  .page-loader-bar {
+    animation: page-loader-bar-anim 1.5s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+  }
+
+  @keyframes page-loader-bar-anim {
+    0% {
+      transform: translateX(-100%) skewX(-15deg);
+    }
+    50% {
+      transform: translateX(0) skewX(-15deg);
+    }
+    100% {
+      transform: translateX(100%) skewX(-15deg);
+    }
+  }
 }
 
 /* Custom Scrollbar Styles */

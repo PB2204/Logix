@@ -1,7 +1,7 @@
 
 "use client";
 
-import Link from 'next/link';
+import { Link } from '@/components/shared/Link';
 import { Button } from '@/components/ui/button';
 import { BrainCircuit, Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';

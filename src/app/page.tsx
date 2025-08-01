@@ -4,7 +4,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, Star, ArrowRight, BrainCircuit, Bug, GraduationCap, Code, FileSearch, Languages, Rocket, Users, Share2 } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/components/shared/Link';
 import { AnimatedShapes } from '@/components/shared/AnimatedShapes';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
@@ -126,7 +126,7 @@ const PopularTopicsSection = () => {
                     <h2 className="text-4xl font-headline font-bold">Explore Popular Topics</h2>
                     <p className="text-muted-foreground mt-2">Dive into key computer science concepts with our curated resources.</p>
                 </div>
-                <div className="grid grid-cols-3 lg:grid-cols-5 gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
                     {topics.map((topic) => (
                         <Card key={topic.name} className="flex flex-col items-center justify-center p-6 bg-gradient-card border-border/50 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-2">
                             <div className="text-primary mb-3">{topic.icon}</div>
@@ -349,8 +349,9 @@ const Footer = () => (
         <div className="container mx-auto text-center text-muted-foreground text-sm">
             <p>&copy; {new Date().getFullYear()} Logix. All Rights Reserved.</p>
             <p className="flex items-center justify-center gap-1 mt-1">
-                Developed & Maintained by
+                Developed & Maintained with 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="hsl(var(--primary))" stroke="hsl(var(--primary))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                by
                 <a href="https://mbwebbers.tech" target="_blank" rel="noopener noreferrer" className="font-semibold text-foreground/80 hover:text-accent-light transition-colors">
                   MB WEBBER'S
                 </a>

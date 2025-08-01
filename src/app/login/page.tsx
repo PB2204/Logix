@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
+import { Link } from "@/components/shared/Link";
 import { LoginForm } from "@/components/auth/LoginForm";
 
 export default function LoginPage() {
