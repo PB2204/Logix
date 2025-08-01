@@ -113,4 +113,3 @@ At the end of each sprint, the team has a potentially shippable increment of the
     ]
   }
 };
-`

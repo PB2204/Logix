@@ -119,4 +119,3 @@ Without the mutex, a race condition could occur where both threads read the same
     ]
   }
 };
-`
