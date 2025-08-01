@@ -342,7 +342,7 @@ export function Playground() {
   return (
     <div className="flex flex-col md:flex-row gap-6 h-full">
       <div className="flex flex-col gap-4 w-full md:w-1/2 h-full">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <Select value={language} onValueChange={handleLanguageChange}>
             <SelectTrigger className="w-[120px] sm:w-[180px]">
               <SelectValue placeholder="Select Language" />
@@ -353,7 +353,7 @@ export function Playground() {
               ))}
             </SelectContent>
           </Select>
-          <div className="flex gap-2 sm:gap-4">
+          <div className="flex-grow flex justify-end gap-2">
             <Button onClick={handleAnalyze} disabled={isAnalyzing || !code.trim()}>
               {isAnalyzing ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
               Analyze
