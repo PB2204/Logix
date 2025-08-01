@@ -294,7 +294,8 @@ const TestimonialsSection = () => {
 const BenefitsSection = () => {
     const benefits = [
         'AI-Powered Explanations', 'Instant Code Analysis', 'Multi-Language Support',
-        'Organized Study Materials', '24/7 Learning Assistance', 'Complexity Analysis'
+        'Organized Study Materials', '24/7 Learning Assistance', 'Complexity Analysis',
+        'Interview Preparation', 'Project Building'
     ];
     return (
         <section className="w-full py-16 md:py-24">
