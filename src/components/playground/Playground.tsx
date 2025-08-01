@@ -353,7 +353,7 @@ export function Playground() {
               ))}
             </SelectContent>
           </Select>
-          <div className="flex gap-2">
+          <div className="flex gap-4">
             <Button onClick={handleAnalyze} disabled={isAnalyzing || !code.trim()}>
               {isAnalyzing ? <Loader className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
               Analyze
@@ -375,13 +375,13 @@ export function Playground() {
       </div>
       <div className="w-full md:w-1/2 h-full flex flex-col gap-4">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-4 sm:flex sm:overflow-x-auto sm:w-auto">
             <TabsTrigger value="input">Input</TabsTrigger>
             <TabsTrigger value="output">Output</TabsTrigger>
             <TabsTrigger value="analysis">Analysis</TabsTrigger>
             <TabsTrigger value="complexity">Complexity</TabsTrigger>
           </TabsList>
-           <TabsContent value="input" className="flex-1 min-h-0">
+           <TabsContent value="input" className="flex-1 min-h-0 mt-4">
                 <Card className="h-full bg-gradient-card">
                     <CardContent className="p-0 h-full">
                         <Textarea
@@ -393,7 +393,7 @@ export function Playground() {
                     </CardContent>
                 </Card>
            </TabsContent>
-          <TabsContent value="output" className="flex-1 min-h-0">
+          <TabsContent value="output" className="flex-1 min-h-0 mt-4">
             <Card className="h-full bg-gradient-card">
                 <CardContent className="p-0 h-full">
                     <div className="p-4 bg-transparent h-full w-full overflow-auto rounded-md font-code text-sm">
@@ -415,7 +415,7 @@ export function Playground() {
                 </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent value="analysis" className="flex-1 min-h-0">
+          <TabsContent value="analysis" className="flex-1 min-h-0 mt-4">
             <Card className="h-full bg-gradient-card">
                 <CardContent className="p-4 h-full w-full overflow-auto">
                     {isAnalyzing && <div className="flex items-center gap-2 text-sm"><Loader className="h-4 w-4 animate-spin" /><span>Analyzing your code...</span></div>}
@@ -423,7 +423,7 @@ export function Playground() {
                 </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent value="complexity" className="flex-1 min-h-0">
+          <TabsContent value="complexity" className="flex-1 min-h-0 mt-4">
             <Card className="h-full bg-gradient-card">
                 <CardContent className="p-4 h-full w-full overflow-auto">
                 {isAnalyzing && <div className="flex items-center gap-2 text-sm"><Loader className="h-4 w-4 animate-spin" /><span>Analyzing complexity...</span></div>}
