@@ -1,7 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check, Star, ArrowRight, BrainCircuit, Bug, GraduationCap } from 'lucide-react';
+import { Check, Star, ArrowRight, BrainCircuit, Bug, GraduationCap, Code, FileSearch, Languages, Rocket, Users, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { AnimatedShapes } from '@/components/shared/AnimatedShapes';
 
@@ -106,7 +106,7 @@ const PopularTopicsSection = () => {
         // Intermediate
         { name: "Software Engineering", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2.5a2.5 2.5 0 0 1 5 0V5a2.5 2.5 0 0 1-5 0V2.5zM4.5 16.5a2.5 2.5 0 0 0 5 0V14a2.5 2.5 0 0 0-5 0v2.5z"></path><path d="M7 14v-1.5a2.5 2.5 0 0 1 5 0V14"></path><path d="M17 5v1.5a2.5 2.5 0 0 0 5 0V5"></path><path d="M19.5 16.5a2.5 2.5 0 0 1-5 0V14a2.5 2.5 0 0 1 5 0v2.5z"></path><path d="M7 9.5a2.5 2.5 0 0 0 5 0V7a2.5 2.5 0 0 0-5 0v2.5z"></path><path d="M12 16.5V9.5"></path></svg> },
         { name: "Web Development", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 12.5 8 15l2 2.5M14 12.5 16 15l-2 2.5"></path><path d="m3 2 9 9 9-9"></path><path d="m3 22 9-9 9 9"></path></svg> },
-        { name: "Cybersecurity", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> },
+        { name: "Cybersecurity", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> },
         { name: "Compiler Design", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19l-7-7 7-7 7 7-7 7z"></path><path d="M12 5v14"></path><path d="M5 12h14"></path></svg> },
 
         // Advanced
@@ -171,18 +171,33 @@ const UseCasesSection = () => {
         {
             icon: <GraduationCap className="w-10 h-10 text-accent" />,
             title: 'Ace Your Exams',
-            description: 'Use the AI chatbot to get detailed explanations of complex topics and practice with relevant questions. Organize your notes with our study materials.',
+            description: 'Get detailed explanations of complex topics and practice with relevant questions to prepare for midterms and finals.',
         },
         {
-            icon: <BrainCircuit className="w-10 h-10 text-accent" />,
+            icon: <Rocket className="w-10 h-10 text-accent" />,
             title: 'Prepare for Interviews',
-            description: 'Sharpen your coding skills in the playground. Analyze time and space complexity to write optimal solutions for technical interviews.',
+            description: 'Sharpen your coding skills in the playground. Analyze complexity to write optimal solutions for technical interviews.',
         },
         {
             icon: <Bug className="w-10 h-10 text-accent" />,
             title: 'Debug Projects Faster',
-            description: "Don't get stuck on a bug for hours. Get AI-powered suggestions to find and fix errors in your code quickly and efficiently.",
-        }
+            description: "Don't get stuck on a bug for hours. Get AI-powered suggestions to find and fix errors in your code quickly.",
+        },
+        {
+            icon: <Code className="w-10 h-10 text-accent" />,
+            title: 'Build Projects with Confidence',
+            description: "Prototype and build your personal projects with an AI-assisted environment to guide you from idea to deployment.",
+        },
+        {
+            icon: <FileSearch className="w-10 h-10 text-accent" />,
+            title: 'Understand Complex Codebases',
+            description: "Paste in unfamiliar code to get a line-by-line explanation, helping you contribute to open-source or team projects.",
+        },
+        {
+            icon: <Languages className="w-10 h-10 text-accent" />,
+            title: 'Master New Languages',
+            description: "Learn the syntax and best practices of a new programming language by experimenting and getting instant feedback.",
+        },
     ];
     return (
         <section className="w-full py-16 md:py-24 bg-background/70 backdrop-blur-sm">
@@ -191,9 +206,9 @@ const UseCasesSection = () => {
                     <h2 className="text-4xl font-headline font-bold">Supercharge Your Workflow</h2>
                     <p className="text-muted-foreground mt-2">Logix is your secret weapon for any CS challenge.</p>
                 </div>
-                <div className="grid gap-8 md:grid-cols-3">
+                <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                     {useCases.map((uc) => (
-                        <Card key={uc.title} className="bg-gradient-card border-border/50 p-6 text-left">
+                        <Card key={uc.title} className="bg-gradient-card border-border/50 p-6 text-left transform hover:scale-105 transition-transform duration-300 ease-in-out shadow-lg hover:shadow-2xl hover:shadow-accent/20">
                             <div className="mb-4">{uc.icon}</div>
                             <h3 className="text-2xl font-bold font-headline mb-2">{uc.title}</h3>
                             <p className="text-muted-foreground">{uc.description}</p>
