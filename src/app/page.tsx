@@ -6,10 +6,10 @@ import Link from 'next/link';
 import { AnimatedShapes } from '@/components/shared/AnimatedShapes';
 
 const HeroSection = () => (
-  <section className="w-full py-20 md:py-32 lg:py-40 relative overflow-hidden bg-grid-pattern bg-grid-pattern/40">
+  <section className="w-full py-20 md:py-32 lg:py-40 relative overflow-hidden">
     <AnimatedShapes />
     <div className="container mx-auto text-center px-4 md:px-6 relative z-10">
-      <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl animate-glow">
+      <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl bg-gradient-primary bg-clip-text text-transparent">
         Logix : Learn Logically
       </h1>
       <p className="mt-6 text-lg md:text-xl text-muted-foreground">
