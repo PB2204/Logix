@@ -1,9 +1,14 @@
 
+"use client";
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, Star, ArrowRight, BrainCircuit, Bug, GraduationCap, Code, FileSearch, Languages, Rocket, Users, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { AnimatedShapes } from '@/components/shared/AnimatedShapes';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import React from 'react';
 
 const HeroSection = () => (
   <section className="w-full py-20 md:py-32 lg:py-40 relative overflow-hidden bg-grid-pattern bg-repeat bg-grid-pattern">
@@ -222,36 +227,69 @@ const UseCasesSection = () => {
 
 const TestimonialsSection = () => {
     const testimonials = [
-        { name: 'Anjali Singh', role: 'B.Tech Student, Sarala Birla University', text: 'This AI has been a game-changer for my assignments. The code analysis feature helps me find bugs I would have missed otherwise. Invaluable for any computer science student.' },
-        { name: 'Vikram Reddy', role: 'M.Tech Student, Vellore Institute of Technology', text: 'The AI chatbot is fantastic. It explains complex concepts like recursion and dynamic programming in a way that is easy to understand. The playground is also great for practice.' },
-        { name: 'Sneha Patel', role: 'B.E Student, Birla Institute of Technology', text: 'I love how everything is in one place. The study materials are well-organized, and the AI tools make learning interactive and fun. Highly recommend to all my peers.' },
+        { name: 'Anjali Singh', role: 'B.Tech Student, IIT Bombay', text: 'Logix has been a game-changer for my assignments. The code analysis feature helps me find bugs I would have missed otherwise.' },
+        { name: 'Vikram Reddy', role: 'M.Tech Student, Vellore Institute of Technology', text: 'The AI chatbot is fantastic. It explains complex concepts like recursion and dynamic programming in a way that is easy to understand.' },
+        { name: 'Sneha Patel', role: 'B.E Student, BITS Pilani', text: 'I love how everything is in one place. The study materials are well-organized, and the AI tools make learning interactive and fun.' },
+        { name: 'Rohan Gupta', role: 'CS Major, Stanford University', text: 'The complexity analysis is incredibly useful for my algorithms course. Seeing the visual graph helps so much. Highly recommend!' },
+        { name: 'Priya Sharma', role: 'PhD Candidate, Carnegie Mellon University', text: 'As a researcher, I often need to understand complex codebases. Logix\'s AI explanation tool has saved me countless hours.' },
+        { name: 'Amit Kumar', role: 'Developer, Google India', text: 'I use the playground to test out new language features and algorithms. It\'s faster than setting up a local environment.' },
+        { name: 'Meera Iyer', role: 'Student, National University of Singapore', text: 'The multi-language support in the playground is perfect for my coursework, which spans Python, Java, and C++.' },
+        { name: 'Siddharth Menon', role: 'B.Sc. CS Student, University of Delhi', text: 'Getting instant feedback from the AI on my code has accelerated my learning curve significantly. It\'s like having a 24/7 TA.' },
+        { name: 'Aisha Khan', role: 'Aspiring Developer, IIIT Hyderabad', text: 'Logix helped me prepare for my technical interviews. The combination of practice and analysis is unbeatable.' },
+        { name: 'David Chen', role: 'Computer Science, MIT', text: 'The chatbot doesn\'t just give answers, it explains the *why*. This has been crucial for building a deeper understanding.' },
+        { name: 'Fatima Al-Jamil', role: 'Software Engineer, Microsoft', text: 'A brilliant tool for both students and professionals. Keeps my skills sharp and helps me stay updated with best practices.' },
+        { name: 'Karan Malhotra', role: 'Student, IIT Delhi', text: 'The curated study materials are a lifesaver during exam season. Everything is so well-organized by semester and topic.' },
+        { name: 'Isabelle Dubois', role: 'Exchange Student, ETH Zurich', text: 'I was struggling with my OS class, but the detailed explanations from the AI tutor made all the difference. Merci Logix!' },
+        { name: 'Arjun Nair', role: 'Data Science Intern, Amazon', text: 'I use Logix to quickly prototype data processing scripts in Python. The immediate output is great for iterative development.' },
+        { name: 'Yuki Tanaka', role: 'Computer Engineering, University of Tokyo', text: 'The UI/UX is beautiful and intuitive. It makes studying complex topics feel less daunting and more enjoyable.' },
     ];
+
+    const plugin = React.useRef(
+        Autoplay({ delay: 3000, stopOnInteraction: true })
+    );
+
     return (
         <section className="w-full py-16 md:py-24">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-headline font-bold">Loved by Students Everywhere</h2>
                 </div>
-                <div className="grid gap-8 md:grid-cols-3">
-                    {testimonials.map((testimonial) => (
-                        <Card key={testimonial.name} className="bg-gradient-card border-border/50 p-6 flex flex-col">
-                            <div className="flex items-center mb-4">
-                                <div className="flex text-yellow-400">
-                                    {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
+                <Carousel
+                    plugins={[plugin.current]}
+                    className="w-full"
+                    opts={{
+                        align: "start",
+                        loop: true,
+                    }}
+                    onMouseEnter={plugin.current.stop}
+                    onMouseLeave={plugin.current.reset}
+                >
+                    <CarouselContent className="-ml-4">
+                        {testimonials.map((testimonial, index) => (
+                            <CarouselItem key={index} className="pl-4 basis-full md:basis-1/2 lg:basis-1/3">
+                                <div className="p-1 h-full">
+                                    <Card className="h-full bg-white/5 backdrop-blur-md border border-white/10 rounded-xl shadow-lg transition-all duration-300 hover:border-primary/50 hover:shadow-primary/20 flex flex-col p-6">
+                                        <div className="flex text-yellow-400 mb-4">
+                                            {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
+                                        </div>
+                                        <p className="text-muted-foreground mb-4 flex-grow">&ldquo;{testimonial.text}&rdquo;</p>
+                                        <div>
+                                            <h3 className="font-bold">{testimonial.name}</h3>
+                                            <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                                        </div>
+                                    </Card>
                                 </div>
-                            </div>
-                            <p className="text-muted-foreground mb-4 flex-grow">&ldquo;{testimonial.text}&rdquo;</p>
-                            <div>
-                                <h3 className="font-bold">{testimonial.name}</h3>
-                                <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                            </div>
-                        </Card>
-                    ))}
-                </div>
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="hidden md:flex" />
+                    <CarouselNext className="hidden md:flex" />
+                </Carousel>
             </div>
         </section>
     );
 };
+
 
 const BenefitsSection = () => {
     const benefits = [
