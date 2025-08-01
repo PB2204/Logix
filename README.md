@@ -1,13 +1,9 @@
 
 # Logix: Your AI-Powered Learning Companion
 
-<div align="center">
-  <img src="https://placehold.co/600x300.png" alt="Logix Banner" data-ai-hint="futuristic learning technology" style="border-radius: 12px;"/>
-</div>
-
 <p align="center">
   <strong>Developed & Maintained by <a href="https://mbwebbers.tech">MB WEBBER'S</a></strong><br/>
-  <em>Founder & CEO: <a href="https://www.linkedin.com/in/pabitra-banerjee/">Pabitra Banerjee</a></em>
+  <em>Founder & CEO: <a href="https://www.coderpabitra.me/">Pabitra Banerjee</a></em>
 </p>
 
 ---
