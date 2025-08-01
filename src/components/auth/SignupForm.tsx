@@ -5,14 +5,48 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  FormDescription
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
   email: z.string().email("Invalid email address."),
   password: z.string().min(6, "Password must be at least 6 characters."),
+  profession: z.string({ required_error: "Please select a profession." }),
+  college: z.string().optional(),
+  studentDept: z.string().optional(),
+  semester: z.string().optional(),
+  company: z.string().optional(),
+  professionalDept: z.string().optional(),
+  designation: z.string().optional(),
+  otherWhat: z.string().optional(),
+  otherWhere: z.string().optional(),
+  country: z.string().min(1, "Country is required."),
+  state: z.string().min(1, "State is required."),
+  district: z.string().min(1, "District is required."),
+  dob: z.date({ required_error: "A date of birth is required." }),
+  phone: z.string().min(10, "Please enter a valid phone number."),
 });
 
 export function SignupForm() {
@@ -23,8 +57,21 @@ export function SignupForm() {
       name: "",
       email: "",
       password: "",
+      country: "",
+      state: "",
+      district: "",
+      phone: "",
+      college: "",
+      studentDept: "",
+      company: "",
+      professionalDept: "",
+      designation: "",
+      otherWhat: "",
+      otherWhere: "",
     },
   });
+
+  const profession = form.watch("profession");
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -36,33 +83,36 @@ export function SignupForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Full Name</FormLabel>
-              <FormControl>
-                <Input placeholder="John Doe" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="you@example.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="John Doe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="you@example.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        
         <FormField
           control={form.control}
           name="password"
@@ -76,7 +126,128 @@ export function SignupForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" variant="accent">
+
+        <FormField
+          control={form.control}
+          name="profession"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Profession</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your profession" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="student">Student</SelectItem>
+                  <SelectItem value="professional">Working Professional</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {profession === "student" && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border p-4 rounded-md">
+            <FormField control={form.control} name="college" render={({ field }) => (<FormItem><FormLabel>College Name</FormLabel><FormControl><Input placeholder="Your College" {...field} /></FormControl><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="studentDept" render={({ field }) => (<FormItem><FormLabel>Department</FormLabel><FormControl><Input placeholder="e.g., Computer Science" {...field} /></FormControl><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="semester" render={({ field }) => (
+              <FormItem>
+                <FormLabel>Semester</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger><SelectValue placeholder="Select Semester" /></SelectTrigger>
+                  </FormControl>
+                  <SelectContent>{[...Array(8)].map((_, i) => (<SelectItem key={i + 1} value={`${i + 1}`}>Semester {i + 1}</SelectItem>))}</SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )} />
+          </div>
+        )}
+
+        {profession === "professional" && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border p-4 rounded-md">
+            <FormField control={form.control} name="company" render={({ field }) => (<FormItem><FormLabel>Company Name</FormLabel><FormControl><Input placeholder="Your Company" {...field} /></FormControl><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="professionalDept" render={({ field }) => (<FormItem><FormLabel>Department</FormLabel><FormControl><Input placeholder="e.g., Engineering" {...field} /></FormControl><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="designation" render={({ field }) => (<FormItem><FormLabel>Designation</FormLabel><FormControl><Input placeholder="e.g., Software Engineer" {...field} /></FormControl><FormMessage /></FormItem>)} />
+          </div>
+        )}
+
+        {profession === "other" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border p-4 rounded-md">
+            <FormField control={form.control} name="otherWhat" render={({ field }) => (<FormItem><FormLabel>What do you do?</FormLabel><FormControl><Input placeholder="e.g., Researcher" {...field} /></FormControl><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="otherWhere" render={({ field }) => (<FormItem><FormLabel>Where?</FormLabel><FormControl><Input placeholder="e.g., Research Institute" {...field} /></FormControl><FormMessage /></FormItem>)} />
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <FormField control={form.control} name="country" render={({ field }) => (<FormItem><FormLabel>Country</FormLabel><FormControl><Input placeholder="Your Country" {...field} /></FormControl><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="state" render={({ field }) => (<FormItem><FormLabel>State</FormLabel><FormControl><Input placeholder="Your State" {...field} /></FormControl><FormMessage /></FormItem>)} />
+            <FormField control={form.control} name="district" render={({ field }) => (<FormItem><FormLabel>District</FormLabel><FormControl><Input placeholder="Your District" {...field} /></FormControl><FormMessage /></FormItem>)} />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="dob"
+            render={({ field }) => (
+              <FormItem className="flex flex-col pt-2">
+                <FormLabel>Date of birth</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) =>
+                        date > new Date() || date < new Date("1900-01-01")
+                      }
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone/WhatsApp Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="+1 123 456 7890" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <Button type="submit" className="w-full !mt-8" variant="accent">
           Create Account
         </Button>
       </form>
