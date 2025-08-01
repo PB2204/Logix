@@ -50,12 +50,16 @@ export const AnimatedShapes = ({ count = 20 }) => {
       {shapeElements.map((shape) => (
         <div
           key={shape.id}
-          className={cn('absolute animate-fall', `shape-${shape.type}`)}
+          className={cn('absolute animate-fall', {
+            'rounded-full': shape.type === 'circle',
+            'shape-triangle': shape.type === 'triangle',
+          })}
           style={{
             left: `${shape.left}%`,
             width: `${shape.size}px`,
             height: `${shape.size}px`,
-            backgroundColor: shape.color,
+            backgroundColor: shape.type !== 'triangle' ? shape.color : 'transparent',
+            borderBottomColor: shape.type === 'triangle' ? shape.color : 'transparent',
             animationDuration: `${shape.animationDuration}s`,
             animationDelay: `${shape.animationDelay}s`,
             top: `-${shape.size}px`, // Start off-screen

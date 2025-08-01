@@ -61,6 +61,17 @@
   }
 }
 
+@layer components {
+  .shape-triangle {
+    width: 0;
+    height: 0;
+    background-color: transparent !important;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 25px solid;
+  }
+}
+
 /* Custom Scrollbar Styles */
 ::-webkit-scrollbar {
   width: 12px;
