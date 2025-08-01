@@ -1,0 +1,18 @@
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      // Allow users to create their own profile document upon signup.
+      // The user must be authenticated, and the document ID must match their UID.
+      allow create: if request.auth != null && request.auth.uid == userId;
+
+      // Allow authenticated users to read and update their own data.
+      allow read, update: if request.auth != null && request.auth.uid == userId;
+      
+      // Disallow deleting user documents.
+      allow delete: if false;
+    }
+  }
+}
