@@ -28,6 +28,19 @@ Visually understand the efficiency of your algorithms.
 - **Features:**
   - In-depth analysis of Time and Space Complexity (Best, Average, Worst cases).
   - Detailed, line-by-line explanations of why the code has a certain complexity.
+
+### 3. **Unused Code Detection** ⭐ NEW
+Keep your codebase clean and optimized with intelligent unused code detection.
+- **Features:**
+  - Identifies unused files and exports across your TypeScript/JavaScript codebase
+  - Next.js-aware analysis that understands framework conventions
+  - Web dashboard with visual reports and statistics
+  - Command-line interface for CI/CD integration
+  - JSON output for automated workflows
+- **Technology:**
+  - **Static Analysis:** TypeScript Compiler API for accurate parsing
+  - **Web Interface:** React dashboard with real-time analysis
+  - **CLI Tool:** Node.js script with progress reporting
   - Interactive charts to visualize performance growth with varying input sizes.
 - **Technology:**
   - **AI Analysis:** **Genkit** flow prompts an expert AI persona to perform the analysis.
