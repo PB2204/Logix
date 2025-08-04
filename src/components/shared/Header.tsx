@@ -24,6 +24,7 @@ export default function Header() {
     { href: '/study-materials', label: 'Study Materials' },
     { href: '/playground', label: 'Playground' },
     { href: '/chatbot', label: 'AI Chatbot' },
+    { href: '/code-analysis', label: 'Code Analysis' },
   ];
 
   const handleLogout = async () => {
